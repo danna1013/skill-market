@@ -50,8 +50,7 @@ function ParticleField() {
       });
     }
 
-    // Anthropic warm orange particles
-    const particleColor = theme === 'dark' ? '217, 119, 87' : '200, 106, 69';
+    const particleColor = theme === 'dark' ? '120, 160, 255' : '0, 122, 255';
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
@@ -82,7 +81,7 @@ function ParticleField() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${particleColor}, ${0.06 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(${particleColor}, ${0.03 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -168,9 +167,15 @@ export default function HeroSection() {
             <img src={ORB_2} alt="" className="absolute -bottom-32 -left-20 w-[380px] h-[380px] opacity-12 animate-float-slower blur-sm" />
           </>
         )}
-        <div className="absolute top-[20%] left-[20%] w-72 h-72 rounded-full blur-[100px] animate-float-slow" style={{ background: theme === 'dark' ? 'rgba(217,119,87,0.06)' : 'rgba(217,119,87,0.08)' }} />
-        <div className="absolute bottom-[25%] right-[20%] w-56 h-56 rounded-full blur-[80px] animate-float-slower" style={{ background: theme === 'dark' ? 'rgba(106,155,204,0.06)' : 'rgba(106,155,204,0.08)' }} />
-        <div className="absolute top-[60%] left-[55%] w-40 h-40 rounded-full blur-[60px] animate-float-slow" style={{ background: theme === 'dark' ? 'rgba(176,174,165,0.05)' : 'rgba(176,174,165,0.06)' }} />
+        <div className={`absolute top-[20%] left-[20%] w-72 h-72 rounded-full blur-[100px] animate-float-slow ${
+          theme === 'dark' ? 'bg-[#007AFF]/6' : 'bg-[#007AFF]/8'
+        }`} />
+        <div className={`absolute bottom-[25%] right-[20%] w-56 h-56 rounded-full blur-[80px] animate-float-slower ${
+          theme === 'dark' ? 'bg-[#AF52DE]/6' : 'bg-[#AF52DE]/8'
+        }`} />
+        <div className={`absolute top-[60%] left-[55%] w-40 h-40 rounded-full blur-[60px] animate-float-slow ${
+          theme === 'dark' ? 'bg-[#5856D6]/5' : 'bg-[#5856D6]/6'
+        }`} />
       </div>
 
       <ParticleField />
@@ -185,10 +190,10 @@ export default function HeroSection() {
             }`}
           >
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#d97757' }} />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: '#d97757' }} />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#30D158] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#30D158]" />
             </span>
-            <span style={{ color: 'var(--text-tertiary)' }} className="font-medium">12,000+ Skills 已上架</span>
+            <span style={{ color: 'var(--text-tertiary)' }} className="font-medium">12,000+ skills available</span>
           </div>
 
           {/* Headline */}
@@ -197,12 +202,12 @@ export default function HeroSection() {
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span style={{ color: 'var(--text-primary)' }}>为 AI 智能体构建</span>
+            <span style={{ color: 'var(--text-primary)' }}>The skill dock for</span>
             <br className="sm:hidden" />
             {' '}
             <span className="gradient-text relative">
-              技能层
-              <Sparkles className="absolute -top-2 -right-6 w-5 h-5 animate-pulse" style={{ color: 'rgba(217,119,87,0.5)' }} />
+              sharp agents
+              <Sparkles className="absolute -top-2 -right-6 w-5 h-5 text-[#FFD60A]/40 animate-pulse" />
             </span>
           </h1>
 
@@ -213,8 +218,8 @@ export default function HeroSection() {
             }`}
             style={{ color: 'var(--text-muted)' }}
           >
-            发现、安装并分享 AI 智能体技能。像 npm 一样版本化管理，
-            支持向量搜索。开源、可组合，让智能体做更多。
+            Discover, install, and share AI agent skills. Versioned like npm,
+            searchable with vectors. No gatekeeping, just signal.
           </p>
 
           {/* Search bar */}
@@ -231,17 +236,16 @@ export default function HeroSection() {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="搜索 Skills 名称、描述或标签..."
+                  placeholder="Search skills by name, description, or tag..."
                   className="flex-1 bg-transparent border-none outline-none ml-3 text-sm"
                   style={{ color: 'var(--text-primary)', '--tw-placeholder-color': 'var(--text-faint)' } as any}
                 />
                 <Button
                   type="submit"
                   size="sm"
-                  className="shrink-0 text-white border-0 rounded-xl px-5 transition-all duration-300 hover:scale-[1.02]"
-                  style={{ background: 'linear-gradient(135deg, #d97757, #c86a45)', boxShadow: '0 4px 14px rgba(217,119,87,0.3)' }}
+                  className="shrink-0 bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-5 shadow-lg shadow-[#007AFF]/25 hover:shadow-[#007AFF]/40 transition-all duration-300"
                 >
-                  搜索
+                  Search
                   <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </Button>
               </div>
@@ -256,10 +260,9 @@ export default function HeroSection() {
           >
             <Button
               onClick={() => navigate('/skills')}
-              className="text-white border-0 rounded-xl px-7 py-5 text-sm font-medium hover:scale-[1.02] transition-all duration-300"
-              style={{ background: 'linear-gradient(135deg, #d97757, #c86a45)', boxShadow: '0 4px 14px rgba(217,119,87,0.25)' }}
+              className="bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-7 py-5 text-sm font-medium shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 hover:scale-[1.02] transition-all duration-300"
             >
-              浏览 Skills
+              Browse Skills
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
             <Button
@@ -268,7 +271,7 @@ export default function HeroSection() {
               className="bg-transparent rounded-xl px-7 py-5 text-sm transition-all duration-300"
               style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
             >
-              发布 Skill
+              Publish a Skill
             </Button>
           </div>
 
@@ -293,7 +296,7 @@ export default function HeroSection() {
                   >
                     {tab}
                     {activeTab === tab && (
-                      <span className="absolute bottom-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#d97757]/50 to-transparent" />
+                      <span className="absolute bottom-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#007AFF]/50 to-transparent" />
                     )}
                   </button>
                 ))}
@@ -306,10 +309,10 @@ export default function HeroSection() {
                   onClick={handleCopy}
                   className="p-1.5 rounded-md hover:bg-[var(--surface-hover)] transition-all duration-200"
                   style={{ color: 'var(--text-faint)' }}
-                    aria-label="复制命令"
+                  aria-label="Copy command"
                 >
                   {copied ? (
-                    <Check className="w-3.5 h-3.5" style={{ color: '#788c5d' }} />
+                    <Check className="w-3.5 h-3.5 text-[#30D158]" />
                   ) : (
                     <Copy className="w-3.5 h-3.5" />
                   )}

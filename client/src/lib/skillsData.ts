@@ -27,15 +27,15 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { id: 'all', name: '全部 Skills', icon: 'Layers', color: '#d97757', count: 12135 },
-  { id: 'dev-tools', name: '开发工具', icon: 'Code', color: '#6a9bcc', count: 3240 },
-  { id: 'ai-ml', name: 'AI & ML', icon: 'Brain', color: '#d97757', count: 2180 },
-  { id: 'productivity', name: '效率工具', icon: 'Zap', color: '#b0aea5', count: 1850 },
-  { id: 'search', name: '搜索与数据', icon: 'Search', color: '#788c5d', count: 1420 },
-  { id: 'communication', name: '沟通协作', icon: 'MessageSquare', color: '#d97757', count: 980 },
-  { id: 'security', name: '安全防护', icon: 'Shield', color: '#c86a45', count: 760 },
-  { id: 'automation', name: '自动化', icon: 'Bot', color: '#6a9bcc', count: 890 },
-  { id: 'media', name: '媒体与文件', icon: 'Image', color: '#b0aea5', count: 815 },
+  { id: 'all', name: 'All Skills', icon: 'Layers', color: '#007AFF', count: 12135 },
+  { id: 'dev-tools', name: 'Dev Tools', icon: 'Code', color: '#007AFF', count: 3240 },
+  { id: 'ai-ml', name: 'AI & ML', icon: 'Brain', color: '#AF52DE', count: 2180 },
+  { id: 'productivity', name: 'Productivity', icon: 'Zap', color: '#FF9500', count: 1850 },
+  { id: 'search', name: 'Search & Data', icon: 'Search', color: '#30D158', count: 1420 },
+  { id: 'communication', name: 'Communication', icon: 'MessageSquare', color: '#FF2D55', count: 980 },
+  { id: 'security', name: 'Security', icon: 'Shield', color: '#FF3B30', count: 760 },
+  { id: 'automation', name: 'Automation', icon: 'Bot', color: '#5856D6', count: 890 },
+  { id: 'media', name: 'Media & Files', icon: 'Image', color: '#FF9500', count: 815 },
 ];
 
 export const skills: Skill[] = [
@@ -352,11 +352,11 @@ export const skills: Skill[] = [
 ];
 
 export const sortOptions = [
-  { value: 'downloads', label: '下载量' },
+  { value: 'downloads', label: 'Downloads' },
   { value: 'stars', label: 'Stars' },
-  { value: 'newest', label: '最新上架' },
-  { value: 'updated', label: '最近更新' },
-  { value: 'installs', label: '安装量' },
+  { value: 'newest', label: 'Newest' },
+  { value: 'updated', label: 'Recently Updated' },
+  { value: 'installs', label: 'Installs' },
 ] as const;
 
 export type SortOption = typeof sortOptions[number]['value'];

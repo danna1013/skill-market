@@ -12,14 +12,14 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 const featured = skills.filter(s => s.highlighted);
 
 const categoryColors: Record<string, string> = {
-  'dev-tools': '#6a9bcc',
-  'ai-ml': '#d97757',
-  'productivity': '#b0aea5',
-  'search': '#788c5d',
-  'communication': '#d97757',
-  'security': '#c86a45',
-  'automation': '#6a9bcc',
-  'media': '#b0aea5',
+  'dev-tools': '#007AFF',
+  'ai-ml': '#AF52DE',
+  'productivity': '#FF9500',
+  'search': '#30D158',
+  'communication': '#FF2D55',
+  'security': '#FF3B30',
+  'automation': '#5856D6',
+  'media': '#FF9500',
 };
 
 export default function FeaturedSkills() {
@@ -66,10 +66,10 @@ export default function FeaturedSkills() {
         <div className="flex items-end justify-between">
           <div>
             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
-              精选 Skills
+              Highlighted Skills
             </h2>
             <p className="mt-2 text-base" style={{ color: 'var(--text-muted)' }}>
-              由社区精心筛选，值得信赖的高质量技能。
+              Curated signal — highlighted for quick trust.
             </p>
           </div>
           <div className="hidden sm:flex items-center gap-3">
@@ -93,10 +93,9 @@ export default function FeaturedSkills() {
             </button>
             <Link
               href="/skills"
-              className="flex items-center gap-1.5 text-sm font-medium ml-2 transition-colors"
-              style={{ color: '#d97757' }}
+              className="flex items-center gap-1.5 text-sm text-[#007AFF] hover:text-[#0071E3] transition-colors font-medium ml-2"
             >
-              查看全部
+              View all
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -118,7 +117,7 @@ export default function FeaturedSkills() {
           className="flex gap-5 overflow-x-auto pb-4 px-4 lg:px-[max(1rem,calc((100vw-1280px)/2+2rem))] snap-x snap-mandatory scrollbar-hide"
         >
           {featured.map((skill, i) => {
-            const color = categoryColors[skill.category] || '#d97757';
+            const color = categoryColors[skill.category] || '#007AFF';
             return (
               <Link
                 key={skill.id}
@@ -200,7 +199,7 @@ export default function FeaturedSkills() {
                       <span className="text-xs" style={{ color: 'var(--text-faint)' }}>@{skill.author}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'rgba(120,140,93,0.6)' }} />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/50" />
                       <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
                         <Star className="w-3 h-3 fill-current text-[#FFD60A]/55" />
                         {formatNumber(skill.stars)}
@@ -222,10 +221,9 @@ export default function FeaturedSkills() {
       <div className="sm:hidden container mt-4">
         <Link
           href="/skills"
-          className="flex items-center justify-center gap-1.5 text-sm font-medium"
-          style={{ color: '#d97757' }}
+          className="flex items-center justify-center gap-1.5 text-sm text-[#007AFF] font-medium"
         >
-          查看全部 Skills
+          View all skills
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
