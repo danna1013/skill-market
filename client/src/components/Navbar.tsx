@@ -1,11 +1,11 @@
 /*
  * Design: Apple-style dual theme (Light default / Dark spatial glass)
- * Navbar: Frosted glass floating navbar with theme toggle and Tencent Cloud links
+ * Navbar: Frosted glass floating navbar with theme toggle and OpenClaw entry
  */
 
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Search, Menu, X, Github, Sun, Moon, BookOpen } from 'lucide-react';
+import { Search, Menu, X, Github, Sun, Moon, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -85,17 +85,17 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            {/* Tencent Cloud Tutorial link */}
+            {/* OpenClaw AI link */}
             <a
-              href="https://cloud.tencent.com/developer/article/2624973"
+              href="https://s.ddnsip.cn/openclaw"
               target="_blank"
               rel="noopener noreferrer"
               className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-[var(--surface-hover)]"
               style={{ color: 'var(--text-tertiary)' }}
             >
               <span className="flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5" />
-                教程
+                <Bot className="w-3.5 h-3.5" />
+                OpenClaw
               </span>
             </a>
           </div>
@@ -179,6 +179,16 @@ export default function Navbar() {
               </Link>
             ))}
             <a
+              href="https://s.ddnsip.cn/openclaw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              <Bot className="w-4 h-4" />
+              OpenClaw AI 助手
+            </a>
+            <a
               href="https://cloud.tencent.com/developer/article/2624973"
               target="_blank"
               rel="noopener noreferrer"
@@ -186,15 +196,6 @@ export default function Navbar() {
               style={{ color: 'var(--text-tertiary)' }}
             >
               📚 教程合集
-            </a>
-            <a
-              href="https://s.ddnsip.cn/openclaw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--surface-hover)]"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              🤖 OpenClaw AI 助手
             </a>
             <div className="pt-3" style={{ borderTop: '1px solid var(--divider)' }}>
               <Button

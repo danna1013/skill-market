@@ -1,9 +1,9 @@
 /*
  * Design: Apple-style dual theme
- * Footer: Multi-column footer with resource links
+ * Footer: Multi-column footer with OpenClaw & Tencent Cloud resource links
  */
 
-import { Github, ExternalLink, BookOpen, Gift, Sparkles, MessageCircle } from 'lucide-react';
+import { ExternalLink, BookOpen, Gift, Sparkles, MessageCircle, Bot } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Footer() {
@@ -28,27 +28,26 @@ export default function Footer() {
               <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
                 The open marketplace for AI agent skills. Discover, share, and compose.
               </p>
-
               <div className="flex items-center gap-3">
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
-                  style={{ color: 'var(--text-faint)' }}
-                  aria-label="GitHub"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
                 <a
                   href="https://s.ddnsip.cn/openclaw"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
                   style={{ color: 'var(--text-faint)' }}
-                  aria-label="OpenClaw"
+                  aria-label="OpenClaw AI 助手"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <Bot className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://cloud.tencent.com/developer/article/2624973"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
+                  style={{ color: 'var(--text-faint)' }}
+                  aria-label="教程合集"
+                >
+                  <BookOpen className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -80,16 +79,29 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Resources - Tencent Cloud links */}
+            {/* OpenClaw & Resources */}
             <div>
-              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>资源</h4>
+              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>OpenClaw</h4>
               <ul className="space-y-3">
+                <li>
+                  <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
+                    <Bot className="w-3 h-3" />
+                    AI 助手咨询
+                  </a>
+                </li>
                 <li>
                   <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
                     <BookOpen className="w-3 h-3" />
                     教程合集
                   </a>
                 </li>
+              </ul>
+            </div>
+
+            {/* Activities */}
+            <div>
+              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>活动</h4>
+              <ul className="space-y-3">
                 <li>
                   <a href="https://mc.tencent.com/HZjnvIK8" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
                     <Gift className="w-3 h-3" />
@@ -102,38 +114,6 @@ export default function Footer() {
                     创意征文赛赢大奖
                   </a>
                 </li>
-                <li>
-                  <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
-                    <ExternalLink className="w-3 h-3" />
-                    OpenClaw AI 助手
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Community */}
-            <div>
-              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>社区</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}>
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}
-                    onClick={(e) => { e.preventDefault(); import('sonner').then(({ toast }) => toast('Discord 即将上线')); }}
-                  >
-                    Discord
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}
-                    onClick={(e) => { e.preventDefault(); import('sonner').then(({ toast }) => toast('Blog 即将上线')); }}
-                  >
-                    Blog
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -144,15 +124,8 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} SkillHub. All rights reserved.
             </p>
             <div className="flex items-center gap-5">
-              <a href="#" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}
-                onClick={(e) => { e.preventDefault(); import('sonner').then(({ toast }) => toast('Feature coming soon')); }}
-              >
-                Privacy
-              </a>
-              <a href="#" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}
-                onClick={(e) => { e.preventDefault(); import('sonner').then(({ toast }) => toast('Feature coming soon')); }}
-              >
-                Terms
+              <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}>
+                OpenClaw
               </a>
               <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}>
                 Docs

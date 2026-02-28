@@ -1,7 +1,6 @@
 /*
  * Design: Apple-style dual theme
- * Home page: Hero + Stats + Featured + Popular Grid + CTA + Footer
- * Includes resource links in CTA section
+ * Home page: Hero + Stats + Featured + Popular Grid + OpenClaw Resources + CTA + Footer
  */
 
 import Navbar from '@/components/Navbar';
@@ -12,7 +11,7 @@ import Footer from '@/components/Footer';
 import SkillCard from '@/components/SkillCard';
 import { skills, sortSkills } from '@/lib/skillsData';
 import { Link } from 'wouter';
-import { ArrowRight, BookOpen, MessageCircle, Gift, Sparkles } from 'lucide-react';
+import { ArrowRight, Bot, BookOpen, Gift, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const popularSkills = sortSkills(skills, 'downloads').slice(0, 6);
@@ -64,27 +63,45 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Tencent Cloud Resources Banner */}
+        {/* OpenClaw & Resources Banner */}
         <section className="py-12 relative">
           <div className="container">
             <div className="glass-panel glass-highlight p-8 sm:p-10 animate-fade-in-up">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#007AFF]/20 to-[#00C6FB]/20 flex items-center justify-center" style={{ border: '1px solid var(--divider)' }}>
-                  <BookOpen className="w-4 h-4 text-[#007AFF]" />
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007AFF] to-[#30D158] flex items-center justify-center shadow-lg shadow-[#007AFF]/15">
+                  <Bot className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>
-                  资源中心
-                </h3>
+                <div>
+                  <h3 className="font-display font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>
+                    OpenClaw
+                  </h3>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    你的 AI 开发助手
+                  </p>
+                </div>
               </div>
               <p className="text-sm mb-6 max-w-2xl" style={{ color: 'var(--text-muted)' }}>
-                探索教程、参与活动、赢取大奖。
+                遇到问题？咨询 OpenClaw AI 助手。探索教程、参与活动、赢取大奖。
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <a
+                  href="https://s.ddnsip.cn/openclaw"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
+                  style={{ border: '1px solid var(--divider)' }}
+                >
+                  <Bot className="w-4 h-4 text-[#30D158] shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium group-hover:text-[#30D158] transition-colors" style={{ color: 'var(--text-primary)' }}>OpenClaw AI 助手</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>遇到问题？问 AI</div>
+                  </div>
+                </a>
                 <a
                   href="https://cloud.tencent.com/developer/article/2624973"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
                   <BookOpen className="w-4 h-4 text-[#007AFF] shrink-0" />
@@ -94,23 +111,10 @@ export default function Home() {
                   </div>
                 </a>
                 <a
-                  href="https://s.ddnsip.cn/openclaw"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
-                  style={{ border: '1px solid var(--divider)' }}
-                >
-                  <MessageCircle className="w-4 h-4 text-[#30D158] shrink-0" />
-                  <div>
-                    <div className="text-sm font-medium group-hover:text-[#30D158] transition-colors" style={{ color: 'var(--text-primary)' }}>OpenClaw AI 助手</div>
-                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>遇到问题？问 AI</div>
-                  </div>
-                </a>
-                <a
                   href="https://mc.tencent.com/HZjnvIK8"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
                   <Gift className="w-4 h-4 text-[#FF9500] shrink-0" />
@@ -123,7 +127,7 @@ export default function Home() {
                   href="https://mc.tencent.com/qxkewwOs"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
                   <Sparkles className="w-4 h-4 text-[#AF52DE] shrink-0" />
