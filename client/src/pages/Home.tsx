@@ -32,17 +32,18 @@ export default function Home() {
             <div className="flex items-end justify-between mb-10 animate-fade-in-up">
               <div>
                 <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
-                  Popular Skills
+                  热门 Skills
                 </h2>
                 <p className="mt-2 text-base" style={{ color: 'var(--text-muted)' }}>
-                  Most downloaded skills this month.
+                  本月下载量最高的 Skills。
                 </p>
               </div>
               <Link
                 href="/skills"
-                className="hidden sm:flex items-center gap-1.5 text-sm text-[#007AFF] hover:text-[#0071E3] transition-colors font-medium"
+                className="hidden sm:flex items-center gap-1.5 text-sm font-medium transition-colors"
+                style={{ color: '#d97757' }}
               >
-                View all
+                查看全部
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -56,8 +57,8 @@ export default function Home() {
             </div>
 
             <div className="sm:hidden mt-6 text-center">
-              <Link href="/skills" className="text-sm text-[#007AFF] font-medium inline-flex items-center gap-1">
-                View all skills <ArrowRight className="w-4 h-4" />
+              <Link href="/skills" className="text-sm font-medium inline-flex items-center gap-1" style={{ color: '#d97757' }}>
+                查看全部 Skills <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -68,7 +69,7 @@ export default function Home() {
           <div className="container">
             <div className="glass-panel glass-highlight p-8 sm:p-10 animate-fade-in-up">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007AFF] to-[#30D158] flex items-center justify-center shadow-lg shadow-[#007AFF]/15">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #d97757, #788c5d)', boxShadow: '0 4px 12px rgba(217,119,87,0.2)' }}>
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -91,9 +92,9 @@ export default function Home() {
                   className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
-                  <Bot className="w-4 h-4 text-[#30D158] shrink-0" />
+                  <Bot className="w-4 h-4 shrink-0" style={{ color: '#788c5d' }} />
                   <div>
-                    <div className="text-sm font-medium group-hover:text-[#30D158] transition-colors" style={{ color: 'var(--text-primary)' }}>OpenClaw AI 助手</div>
+                    <div className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>OpenClaw AI 助手</div>
                     <div className="text-xs" style={{ color: 'var(--text-faint)' }}>遇到问题？问 AI</div>
                   </div>
                 </a>
@@ -104,9 +105,9 @@ export default function Home() {
                   className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
-                  <BookOpen className="w-4 h-4 text-[#007AFF] shrink-0" />
+                  <BookOpen className="w-4 h-4 shrink-0" style={{ color: '#6a9bcc' }} />
                   <div>
-                    <div className="text-sm font-medium group-hover:text-[#007AFF] transition-colors" style={{ color: 'var(--text-primary)' }}>教程合集</div>
+                    <div className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>教程合集</div>
                     <div className="text-xs" style={{ color: 'var(--text-faint)' }}>完整开发指南</div>
                   </div>
                 </a>
@@ -117,9 +118,9 @@ export default function Home() {
                   className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
-                  <Gift className="w-4 h-4 text-[#FF9500] shrink-0" />
+                  <Gift className="w-4 h-4 shrink-0" style={{ color: '#d97757' }} />
                   <div>
-                    <div className="text-sm font-medium group-hover:text-[#FF9500] transition-colors" style={{ color: 'var(--text-primary)' }}>最新活动速递</div>
+                    <div className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>最新活动速递</div>
                     <div className="text-xs" style={{ color: 'var(--text-faint)' }}>优惠与福利</div>
                   </div>
                 </a>
@@ -130,9 +131,9 @@ export default function Home() {
                   className="flex items-center gap-3 p-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] hover:scale-[1.01] group"
                   style={{ border: '1px solid var(--divider)' }}
                 >
-                  <Sparkles className="w-4 h-4 text-[#AF52DE] shrink-0" />
+                  <Sparkles className="w-4 h-4 shrink-0" style={{ color: '#b0aea5' }} />
                   <div>
-                    <div className="text-sm font-medium group-hover:text-[#AF52DE] transition-colors" style={{ color: 'var(--text-primary)' }}>创意征文赛</div>
+                    <div className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>创意征文赛</div>
                     <div className="text-xs" style={{ color: 'var(--text-faint)' }}>参赛赢大奖</div>
                   </div>
                 </a>
@@ -144,21 +145,21 @@ export default function Home() {
         {/* CTA Section */}
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#007AFF]/[0.04] blur-[120px]" />
-            <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#AF52DE]/[0.03] blur-[80px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[120px]" style={{ background: 'rgba(217,119,87,0.04)' }} />
+            <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px]" style={{ background: 'rgba(106,155,204,0.03)' }} />
           </div>
 
           <div className="container relative z-10 text-center">
             <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-[-0.02em] mb-5 animate-fade-in-up" style={{ color: 'var(--text-primary)' }}>
-              Build the skill layer for AI
+              为 AI 构建技能层
             </h2>
             <p className="text-lg max-w-xl mx-auto mb-10 animate-fade-in-up" style={{ color: 'var(--text-muted)', animationDelay: '100ms' }}>
-              Open source, composable, versioned. Ship your skill today and let agents do the rest.
+              开源、可组合、版本化。今天就发布您的 Skill，让智能体完成剩下的工作。
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
               <Link href="/upload">
-                <Button className="bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-8 py-5 text-sm font-medium shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 hover:scale-[1.02] transition-all duration-300">
-                  Publish a Skill
+                <Button className="text-white border-0 rounded-xl px-8 py-5 text-sm font-medium hover:scale-[1.02] transition-all duration-300" style={{ background: 'linear-gradient(135deg, #d97757, #c86a45)', boxShadow: '0 4px 14px rgba(217,119,87,0.25)' }}>
+                  发布 Skill
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
@@ -168,7 +169,7 @@ export default function Home() {
                   className="bg-transparent rounded-xl px-8 py-5 text-sm transition-all duration-300"
                   style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
                 >
-                  Browse Skills
+                  浏览 Skills
                 </Button>
               </Link>
             </div>

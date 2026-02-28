@@ -17,25 +17,25 @@ import {
 import { Button } from '@/components/ui/button';
 
 const categoryColors: Record<string, string> = {
-  'dev-tools': '#007AFF',
-  'ai-ml': '#AF52DE',
-  'productivity': '#FF9500',
-  'search': '#30D158',
-  'communication': '#FF2D55',
-  'security': '#FF3B30',
-  'automation': '#5856D6',
-  'media': '#FF9500',
+  'dev-tools': '#6a9bcc',
+  'ai-ml': '#d97757',
+  'productivity': '#b0aea5',
+  'search': '#788c5d',
+  'communication': '#d97757',
+  'security': '#c86a45',
+  'automation': '#6a9bcc',
+  'media': '#b0aea5',
 };
 
 const categoryNames: Record<string, string> = {
-  'dev-tools': 'Dev Tools',
+  'dev-tools': '开发工具',
   'ai-ml': 'AI & ML',
-  'productivity': 'Productivity',
-  'search': 'Search & Data',
-  'communication': 'Communication',
-  'security': 'Security',
-  'automation': 'Automation',
-  'media': 'Media & Files',
+  'productivity': '效率工具',
+  'search': '搜索与数据',
+  'communication': '沟通协作',
+  'security': '安全防护',
+  'automation': '自动化',
+  'media': '媒体与文件',
 };
 
 export default function SkillDetail() {
@@ -43,6 +43,12 @@ export default function SkillDetail() {
   const skill = skills.find(s => s.slug === params.slug);
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'versions' | 'security'>('overview');
+
+  const tabLabels: Record<string, string> = {
+    overview: '概览',
+    versions: '版本历史',
+    security: '安全扫描',
+  };
 
   const related = useMemo(() => {
     if (!skill) return [];
@@ -60,17 +66,18 @@ export default function SkillDetail() {
             <div className="glass-panel glass-highlight inline-block p-12 rounded-2xl">
               <Package className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--text-faint)' }} />
               <h1 className="font-display font-bold text-2xl mb-3" style={{ color: 'var(--text-secondary)' }}>
-                Skill not found
-              </h1>
+              未找到该 Skill
+            </h1>
               <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-                The skill you're looking for doesn't exist or has been removed.
+                您查找的 Skill 不存在或已被移除。
               </p>
               <Link
                 href="/skills"
-                className="inline-flex items-center gap-1.5 text-[#007AFF] hover:text-[#0071E3] text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                style={{ color: '#d97757' }}
               >
                 <ArrowLeft className="w-4 h-4" />
-                Back to skills
+                返回 Skills 市场
               </Link>
             </div>
           </div>
@@ -80,7 +87,7 @@ export default function SkillDetail() {
     );
   }
 
-  const color = categoryColors[skill.category] || '#007AFF';
+  const color = categoryColors[skill.category] || '#d97757';
 
   const installCommands = [
     { label: 'CLI', cmd: `skillhub install ${skill.slug}`, icon: <Terminal className="w-3 h-3" /> },
@@ -103,11 +110,13 @@ export default function SkillDetail() {
           {/* Back link */}
           <Link
             href="/skills"
-            className="inline-flex items-center gap-1.5 text-sm transition-colors mb-8 group hover:text-[#007AFF]"
+            className="inline-flex items-center gap-1.5 text-sm transition-all duration-200 mb-8 group"
             style={{ color: 'var(--text-muted)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#d97757')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            Back to skills
+            返回 Skills 市场
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -150,8 +159,8 @@ export default function SkillDetail() {
                           {skill.currentVersion}
                         </span>
                         {skill.highlighted && (
-                          <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-[#FFD60A]/10 text-[#FFD60A] border border-[#FFD60A]/20">
-                            Highlighted
+                          <span className="px-2.5 py-1 rounded-lg text-xs font-medium" style={{ background: 'rgba(217,119,87,0.12)', color: '#d97757', border: '1px solid rgba(217,119,87,0.22)' }}>
+                            精选
                           </span>
                         )}
                       </div>
@@ -177,24 +186,24 @@ export default function SkillDetail() {
                   <div className="flex flex-wrap items-center gap-5">
                     <div className="flex items-center gap-1.5">
                       <Star className="w-4 h-4 fill-current text-[#FFD60A]/60" />
-                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{formatNumber(skill.stars)} stars</span>
+                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{formatNumber(skill.stars)} Stars</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <Download className="w-4 h-4" style={{ color: 'var(--text-faint)' }} />
-                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{formatNumber(skill.downloads)} downloads</span>
+                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{formatNumber(skill.downloads)} 下载</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <Package className="w-4 h-4" style={{ color: 'var(--text-faint)' }} />
-                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{skill.installs} installs</span>
+                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{skill.installs} 安装</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       {skill.securityStatus === 'benign' ? (
-                        <ShieldCheck className="w-4 h-4 text-[#30D158]/60" />
+                        <ShieldCheck className="w-4 h-4" style={{ color: 'rgba(120,140,93,0.65)' }} />
                       ) : (
-                        <Shield className="w-4 h-4 text-[#FF3B30]/60" />
+                        <Shield className="w-4 h-4" style={{ color: 'rgba(200,106,69,0.65)' }} />
                       )}
-                      <span className="text-sm font-medium capitalize" style={{ color: 'var(--text-tertiary)' }}>
-                        {skill.securityStatus}
+                      <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                        {skill.securityStatus === 'benign' ? '安全' : skill.securityStatus === 'suspicious' ? '待审查' : '未扫描'}
                       </span>
                     </div>
                   </div>
@@ -222,15 +231,15 @@ export default function SkillDetail() {
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className="relative px-5 py-3.5 text-sm font-medium capitalize transition-all duration-200"
+                      className="relative px-5 py-3.5 text-sm font-medium transition-all duration-200"
                       style={{
                         color: activeTab === tab ? 'var(--text-primary)' : 'var(--text-faint)',
                         background: activeTab === tab ? 'var(--surface-subtle)' : 'transparent',
                       }}
                     >
-                      {tab}
+                      {tabLabels[tab]}
                       {activeTab === tab && (
-                        <span className="absolute bottom-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-[#007AFF] to-[#5856D6] rounded-full" />
+                        <span className="absolute bottom-0 left-1/4 right-1/4 h-[2px] rounded-full" style={{ background: 'linear-gradient(to right, #d97757, #c86a45)' }} />
                       )}
                     </button>
                   ))}
@@ -240,40 +249,39 @@ export default function SkillDetail() {
                   {activeTab === 'overview' && (
                     <div className="space-y-6">
                       <div>
-                        <h3 className="font-display font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>About</h3>
+                        <h3 className="font-display font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>关于此 Skill</h3>
                         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                          {skill.description} This skill provides a comprehensive set of tools
-                          and capabilities for AI agents. It follows the SkillHub specification
-                          and is compatible with all major agent frameworks.
+                          {skill.description} 此 Skill 为 AI 智能体提供一组全面的工具和能力。
+                          它遵循 SkillHub 规范，兼容所有主流智能体框架。
                         </p>
                       </div>
 
                       <div>
-                        <h3 className="font-display font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>Quick Start</h3>
+                        <h3 className="font-display font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>快速开始</h3>
                         <div className="glass-panel rounded-xl p-5 relative group">
                           <button
                             onClick={() => handleCopy(`import { ${skill.name.replace(/\s+/g, '')} } from 'skillhub/${skill.slug}';`)}
                             className="absolute top-3 right-3 p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200"
                             style={{ color: 'var(--text-faint)' }}
-                            aria-label="Copy code"
+                            aria-label="复制代码"
                           >
                             <Copy className="w-3.5 h-3.5" />
                           </button>
                           <code className="font-mono text-sm leading-relaxed">
-                            <span className="text-[#007AFF]">import</span>{' '}
-                            <span className="text-[#FF9500]">{'{ '}{skill.name.replace(/\s+/g, '')}{' }'}</span>{' '}
-                            <span className="text-[#007AFF]">from</span>{' '}
-                            <span className="text-[#30D158]">'skillhub/{skill.slug}'</span>;
+                            <span style={{ color: '#6a9bcc' }}>import</span>{' '}
+                            <span style={{ color: '#d97757' }}>{'{ '}{skill.name.replace(/\s+/g, '')}{' }'}</span>{' '}
+                            <span style={{ color: '#6a9bcc' }}>from</span>{' '}
+                            <span style={{ color: '#788c5d' }}>'skillhub/{skill.slug}'</span>;
                             <br /><br />
-                            <span style={{ color: 'var(--text-faint)' }}>// Initialize the skill</span>
+                            <span style={{ color: 'var(--text-faint)' }}>// 初始化 Skill</span>
                             <br />
-                            <span className="text-[#007AFF]">const</span>{' '}
+                            <span style={{ color: '#6a9bcc' }}>const</span>{' '}
                             <span style={{ color: 'var(--text-secondary)' }}>skill</span>{' '}
-                            = <span className="text-[#007AFF]">new</span>{' '}
-                            <span className="text-[#FF9500]">{skill.name.replace(/\s+/g, '')}</span>();
+                            = <span style={{ color: '#6a9bcc' }}>new</span>{' '}
+                            <span style={{ color: '#d97757' }}>{skill.name.replace(/\s+/g, '')}</span>();
                             <br />
-                            <span className="text-[#007AFF]">await</span>{' '}
-                            <span style={{ color: 'var(--text-secondary)' }}>skill</span>.<span className="text-[#AF52DE]">initialize</span>();
+                            <span style={{ color: '#6a9bcc' }}>await</span>{' '}
+                            <span style={{ color: 'var(--text-secondary)' }}>skill</span>.<span style={{ color: '#b0aea5' }}>initialize</span>();
                           </code>
                         </div>
                       </div>
@@ -293,8 +301,8 @@ export default function SkillDetail() {
                               </div>
                               <span className="font-mono text-sm" style={{ color: 'var(--text-secondary)' }}>{i === 0 ? skill.currentVersion : ver}</span>
                               {i === 0 && (
-                                <span className="px-2 py-0.5 rounded-md text-[10px] bg-[#30D158]/10 text-[#30D158] font-medium border border-[#30D158]/15">
-                                  latest
+                                <span className="px-2 py-0.5 rounded-md text-[10px] font-medium" style={{ background: 'rgba(120,140,93,0.1)', color: '#788c5d', border: '1px solid rgba(120,140,93,0.18)' }}>
+                                  最新
                                 </span>
                               )}
                             </div>
@@ -309,29 +317,29 @@ export default function SkillDetail() {
 
                   {activeTab === 'security' && (
                     <div className="space-y-5">
-                      <div className="flex items-center gap-3 p-5 rounded-xl bg-[#30D158]/[4%] border border-[#30D158]/10">
-                        <div className="w-10 h-10 rounded-xl bg-[#30D158]/10 flex items-center justify-center shrink-0">
-                          <ShieldCheck className="w-5 h-5 text-[#30D158]" />
+                      <div className="flex items-center gap-3 p-5 rounded-xl" style={{ background: 'rgba(120,140,93,0.04)', border: '1px solid rgba(120,140,93,0.12)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(120,140,93,0.1)' }}>
+                          <ShieldCheck className="w-5 h-5" style={{ color: '#788c5d' }} />
                         </div>
                         <div>
-                          <h4 className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Security Status: <span className="capitalize">{skill.securityStatus}</span></h4>
+                          <h4 className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>安全状态：<span>{skill.securityStatus === 'benign' ? '安全' : skill.securityStatus === 'suspicious' ? '待审查' : '未扫描'}</span></h4>
                           <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                            This skill has been scanned and verified. No known vulnerabilities detected.
+                            此 Skill 已经过扫描和验证，未发现已知漏洞。
                           </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="glass-panel rounded-xl p-4 text-center">
-                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>Last Scanned</div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>最近扫描</div>
                           <div className="text-sm font-mono" style={{ color: 'var(--text-secondary)' }}>{skill.updatedAt}</div>
                         </div>
                         <div className="glass-panel rounded-xl p-4 text-center">
-                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>License</div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>开源协议</div>
                           <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>MIT</div>
                         </div>
                         <div className="glass-panel rounded-xl p-4 text-center">
-                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>Dependencies</div>
-                          <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>3 verified</div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>依赖项</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>3 已验证</div>
                         </div>
                       </div>
                     </div>
@@ -346,7 +354,7 @@ export default function SkillDetail() {
               <div className="glass-panel glass-highlight p-5 space-y-4 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
                 <h3 className="font-display font-semibold text-sm flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <Terminal className="w-4 h-4" style={{ color: 'var(--text-faint)' }} />
-                  Install
+                  安装
                 </h3>
                 {installCommands.map(({ label, cmd, icon }) => (
                   <div key={label}>
@@ -362,10 +370,10 @@ export default function SkillDetail() {
                         onClick={() => handleCopy(cmd)}
                         className="shrink-0 p-1 opacity-0 group-hover/cmd:opacity-100 transition-all duration-200"
                         style={{ color: 'var(--text-faint)' }}
-                        aria-label={`Copy ${label} command`}
+                        aria-label={`复制 ${label} 命令`}
                       >
                         {copiedCmd === cmd ? (
-                          <Check className="w-3.5 h-3.5 text-[#30D158]" />
+                          <Check className="w-3.5 h-3.5" style={{ color: '#788c5d' }} />
                         ) : (
                           <Copy className="w-3.5 h-3.5" />
                         )}
@@ -374,14 +382,15 @@ export default function SkillDetail() {
                   </div>
                 ))}
                 <Button
-                  className="w-full bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 transition-all duration-300"
+                  className="w-full text-white border-0 rounded-xl transition-all duration-300 hover:scale-[1.01]"
+                  style={{ background: 'linear-gradient(135deg, #d97757, #c86a45)', boxShadow: '0 4px 14px rgba(217,119,87,0.25)' }}
                   onClick={() => {
-                    import('sonner').then(({ toast }) => toast.success(`${skill.name} install command copied!`));
+                    import('sonner').then(({ toast }) => toast.success(`${skill.name} 安装命令已复制`));
                     handleCopy(installCommands[0].cmd);
                   }}
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Install Skill
+                  安装 Skill
                 </Button>
               </div>
 
@@ -389,7 +398,7 @@ export default function SkillDetail() {
               <div className="glass-panel glass-highlight p-5 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 <h3 className="font-display font-semibold text-sm mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <User className="w-4 h-4" style={{ color: 'var(--text-faint)' }} />
-                  Author
+                  作者
                 </h3>
                 <div className="flex items-center gap-3">
                   <div
@@ -400,30 +409,31 @@ export default function SkillDetail() {
                   </div>
                   <div>
                     <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>@{skill.author}</div>
-                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>Skill Author</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>Skill 作者</div>
                   </div>
                 </div>
                 <a
                   href={`https://github.com/${skill.author}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 flex items-center gap-2 text-xs text-[#007AFF] hover:text-[#0071E3] transition-colors group/link"
+                  className="mt-4 flex items-center gap-2 text-xs transition-colors group/link"
+                  style={{ color: '#d97757' }}
                 >
                   <Github className="w-3.5 h-3.5" />
-                  <span className="group-hover/link:underline">View on GitHub</span>
+                  <span className="group-hover/link:underline">在 GitHub 上查看</span>
                   <ExternalLink className="w-3 h-3 opacity-50" />
                 </a>
               </div>
 
               {/* Meta card */}
               <div className="glass-panel glass-highlight p-5 space-y-3 animate-fade-in-up" style={{ animationDelay: '250ms' }}>
-                <h3 className="font-display font-semibold text-sm mb-4" style={{ color: 'var(--text-primary)' }}>Details</h3>
+                <h3 className="font-display font-semibold text-sm mb-4" style={{ color: 'var(--text-primary)' }}>详细信息</h3>
                 {[
-                  { icon: <Calendar className="w-4 h-4" />, label: 'Created', value: skill.createdAt },
-                  { icon: <Clock className="w-4 h-4" />, label: 'Updated', value: skill.updatedAt },
-                  { icon: <GitBranch className="w-4 h-4" />, label: 'Versions', value: String(skill.versions) },
-                  { icon: <Download className="w-4 h-4" />, label: 'Downloads', value: formatNumber(skill.downloads) },
-                  { icon: <User className="w-4 h-4" />, label: 'Installs', value: formatNumber(skill.installs) },
+                  { icon: <Calendar className="w-4 h-4" />, label: '创建时间', value: skill.createdAt },
+                  { icon: <Clock className="w-4 h-4" />, label: '更新时间', value: skill.updatedAt },
+                  { icon: <GitBranch className="w-4 h-4" />, label: '版本数', value: String(skill.versions) },
+                  { icon: <Download className="w-4 h-4" />, label: '下载量', value: formatNumber(skill.downloads) },
+                  { icon: <User className="w-4 h-4" />, label: '安装量', value: formatNumber(skill.installs) },
                 ].map(item => (
                   <div key={item.label} className="flex items-center gap-2.5 text-sm py-0.5">
                     <span style={{ color: 'var(--text-faint)' }}>{item.icon}</span>
@@ -440,7 +450,7 @@ export default function SkillDetail() {
             <section className="mt-16">
               <div className="w-full h-px mb-10" style={{ background: 'linear-gradient(to right, transparent, var(--divider), transparent)' }} />
               <h2 className="font-display font-bold text-2xl tracking-[-0.02em] mb-6" style={{ color: 'var(--text-primary)' }}>
-                Related Skills
+                相关 Skills
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {related.map((s, i) => (

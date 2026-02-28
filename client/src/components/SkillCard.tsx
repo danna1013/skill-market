@@ -13,18 +13,18 @@ interface SkillCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  'dev-tools': '#007AFF',
-  'ai-ml': '#AF52DE',
-  'productivity': '#FF9500',
-  'search': '#30D158',
-  'communication': '#FF2D55',
-  'security': '#FF3B30',
-  'automation': '#5856D6',
-  'media': '#FF9500',
+  'dev-tools': '#6a9bcc',
+  'ai-ml': '#d97757',
+  'productivity': '#b0aea5',
+  'search': '#788c5d',
+  'communication': '#d97757',
+  'security': '#c86a45',
+  'automation': '#6a9bcc',
+  'media': '#b0aea5',
 };
 
 export default function SkillCard({ skill, index = 0 }: SkillCardProps) {
-  const color = categoryColors[skill.category] || '#007AFF';
+  const color = categoryColors[skill.category] || '#d97757';
 
   return (
     <Link
@@ -42,8 +42,8 @@ export default function SkillCard({ skill, index = 0 }: SkillCardProps) {
         {/* Highlighted badge */}
         {skill.highlighted && (
           <div className="absolute top-3 right-3 z-20">
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-[#FFD60A]/15 to-[#FF9500]/15 text-[#FF9500]" style={{ border: '1px solid rgba(255,149,0,0.2)' }}>
-              Featured
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: 'rgba(217,119,87,0.12)', color: '#d97757', border: '1px solid rgba(217,119,87,0.22)' }}>
+              精选
             </span>
           </div>
         )}
@@ -61,7 +61,7 @@ export default function SkillCard({ skill, index = 0 }: SkillCardProps) {
               {skill.name[0]}
             </div>
             <div className="min-w-0">
-              <h3 className="font-display font-semibold text-[15px] truncate transition-colors group-hover:text-[#007AFF]" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="font-display font-semibold text-[15px] truncate transition-all duration-200 group-hover:opacity-80" style={{ color: 'var(--text-primary)' }}>
                 {skill.name}
               </h3>
               <span className="font-mono text-[11px] block" style={{ color: 'var(--text-faint)' }}>
@@ -112,13 +112,13 @@ export default function SkillCard({ skill, index = 0 }: SkillCardProps) {
           </div>
           <div className="flex items-center gap-3">
             {skill.securityStatus === 'benign' && (
-              <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/60" />
+              <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'rgba(120,140,93,0.65)' }} />
             )}
             {skill.securityStatus === 'suspicious' && (
-              <Shield className="w-3.5 h-3.5 text-[#FF3B30]/60" />
+              <Shield className="w-3.5 h-3.5" style={{ color: 'rgba(200,106,69,0.65)' }} />
             )}
             <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
-              <Star className="w-3 h-3 fill-current text-[#FFD60A]/60" />
+              <Star className="w-3 h-3 fill-current" style={{ color: 'rgba(217,119,87,0.6)' }} />
               {formatNumber(skill.stars)}
             </span>
             <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>

@@ -15,10 +15,10 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { label: 'Total Skills', value: 12135, suffix: '+', color: '#007AFF', icon: <Package className="w-5 h-5" /> },
-  { label: 'Downloads', value: 2400000, suffix: '+', color: '#AF52DE', icon: <Download className="w-5 h-5" /> },
-  { label: 'Contributors', value: 3800, suffix: '+', color: '#FF9500', icon: <Users className="w-5 h-5" /> },
-  { label: 'Categories', value: 8, suffix: '', color: '#30D158', icon: <Grid3X3 className="w-5 h-5" /> },
+  { label: 'Skills 总数', value: 12135, suffix: '+', color: '#d97757', icon: <Package className="w-5 h-5" /> },
+  { label: '总下载量', value: 2400000, suffix: '+', color: '#6a9bcc', icon: <Download className="w-5 h-5" /> },
+  { label: '贡献者', value: 3800, suffix: '+', color: '#b0aea5', icon: <Users className="w-5 h-5" /> },
+  { label: '分类数量', value: 8, suffix: '', color: '#788c5d', icon: <Grid3X3 className="w-5 h-5" /> },
 ];
 
 function formatStatValue(value: number): string {

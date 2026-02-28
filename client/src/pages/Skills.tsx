@@ -21,18 +21,18 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 
 const categoryColors: Record<string, string> = {
-  'dev-tools': '#007AFF',
-  'ai-ml': '#AF52DE',
-  'productivity': '#FF9500',
-  'search': '#30D158',
-  'communication': '#FF2D55',
-  'security': '#FF3B30',
-  'automation': '#5856D6',
-  'media': '#FF9500',
+  'dev-tools': '#6a9bcc',
+  'ai-ml': '#d97757',
+  'productivity': '#b0aea5',
+  'search': '#788c5d',
+  'communication': '#d97757',
+  'security': '#c86a45',
+  'automation': '#6a9bcc',
+  'media': '#b0aea5',
 };
 
 function SkillListItem({ skill }: { skill: Skill }) {
-  const color = categoryColors[skill.category] || '#007AFF';
+  const color = categoryColors[skill.category] || '#d97757';
   return (
     <Link href={`/skill/${skill.slug}`} className="block group">
       <div className="skill-card glass-panel glass-highlight p-4 sm:p-5 flex items-center gap-4 relative overflow-hidden">
@@ -63,8 +63,8 @@ function SkillListItem({ skill }: { skill: Skill }) {
               {skill.currentVersion}
             </span>
             {skill.highlighted && (
-              <span className="px-1.5 py-0.5 rounded text-[9px] bg-[#FFD60A]/10 text-[#FFD60A] font-medium">
-                highlighted
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-medium" style={{ background: 'rgba(217,119,87,0.12)', color: '#d97757' }}>
+                精选
               </span>
             )}
           </div>
@@ -79,10 +79,10 @@ function SkillListItem({ skill }: { skill: Skill }) {
             @{skill.author}
           </span>
           {skill.securityStatus === 'benign' && (
-            <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/55" />
+            <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'rgba(120,140,93,0.6)' }} />
           )}
           <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
-            <Star className="w-3 h-3 fill-current text-[#FFD60A]/55" />
+            <Star className="w-3 h-3 fill-current" style={{ color: 'rgba(217,119,87,0.6)' }} />
             {formatNumber(skill.stars)}
           </span>
           <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
@@ -131,12 +131,12 @@ export default function Skills() {
           {/* Page header */}
           <div className="mb-8">
             <h1 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
-              Browse Skills
+              Skills 市场
             </h1>
             <p className="mt-2" style={{ color: 'var(--text-muted)' }}>
-              <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>{filtered.length}</span> skill{filtered.length !== 1 ? 's' : ''} found
+              找到 <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>{filtered.length}</span> 个 Skills
               {query && (
-                <span style={{ color: 'var(--text-faint)' }}> for &ldquo;<span style={{ color: 'var(--text-secondary)' }}>{query}</span>&rdquo;</span>
+                <span style={{ color: 'var(--text-faint)' }}>，搜索“<span style={{ color: 'var(--text-secondary)' }}>{query}</span>”</span>
               )}
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function Skills() {
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
-                  placeholder="Search by name, description, tag, or author..."
+                  placeholder="按名称、描述、标签或作者搜索..."
                   className="flex-1 bg-transparent border-none outline-none ml-3 text-sm"
                   style={{ color: 'var(--text-primary)' }}
                 />
@@ -191,12 +191,12 @@ export default function Skills() {
                         onClick={() => setSort(opt.value)}
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           sort === opt.value
-                            ? 'text-[#007AFF] font-medium'
+                            ? 'font-medium'
                             : ''
                         }`}
                         style={
                           sort === opt.value
-                            ? { background: 'var(--surface-hover)' }
+                            ? { background: 'var(--surface-hover)', color: '#d97757' }
                             : { color: 'var(--text-muted)' }
                         }
                       >
@@ -211,12 +211,12 @@ export default function Skills() {
                   onClick={() => setShowHighlighted(!showHighlighted)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border ${
                     showHighlighted
-                      ? 'bg-[#007AFF]/15 border-[#007AFF]/30 text-[#007AFF]'
+                      ? 'border-[#d97757]/30'
                       : 'glass-panel'
                   }`}
-                  style={!showHighlighted ? { color: 'var(--text-muted)' } : undefined}
+                  style={showHighlighted ? { background: 'rgba(217,119,87,0.12)', color: '#d97757' } : { color: 'var(--text-muted)' }}
                 >
-                  <span className="hidden sm:inline">Highlighted</span>
+                  <span className="hidden sm:inline">精选</span>
                   <span className="sm:hidden">★</span>
                 </button>
 
@@ -224,29 +224,25 @@ export default function Skills() {
                 <div className="flex rounded-lg glass-panel overflow-hidden">
                   <button
                     onClick={() => setView('grid')}
-                    className={`p-2 transition-colors ${
-                      view === 'grid' ? 'text-[#007AFF]' : ''
-                    }`}
+                    className="p-2 transition-colors"
                     style={
                       view === 'grid'
-                        ? { background: 'var(--surface-hover)' }
+                        ? { background: 'var(--surface-hover)', color: '#d97757' }
                         : { color: 'var(--text-faint)' }
                     }
-                    aria-label="Grid view"
+                    aria-label="网格视图"
                   >
                     <Grid3X3 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setView('list')}
-                    className={`p-2 transition-colors ${
-                      view === 'list' ? 'text-[#007AFF]' : ''
-                    }`}
+                    className="p-2 transition-colors"
                     style={
                       view === 'list'
-                        ? { background: 'var(--surface-hover)' }
+                        ? { background: 'var(--surface-hover)', color: '#d97757' }
                         : { color: 'var(--text-faint)' }
                     }
-                    aria-label="List view"
+                    aria-label="列表视图"
                   >
                     <List className="w-4 h-4" />
                   </button>
@@ -282,17 +278,17 @@ export default function Skills() {
             <div className="glass-panel glass-highlight p-16 text-center animate-fade-in-up">
               <Search className="w-12 h-12 mx-auto mb-5" style={{ color: 'var(--text-faint)' }} />
               <h3 className="font-display font-semibold text-lg mb-2" style={{ color: 'var(--text-secondary)' }}>
-                No skills found
+                未找到匹配的 Skills
               </h3>
               <p className="text-sm max-w-md mx-auto mb-6" style={{ color: 'var(--text-muted)' }}>
-                Try adjusting your search query or filters. You can also browse all categories.
+                请尝试调整搜索关键词或筛选条件，或浏览全部分类。
               </p>
               <Button
                 onClick={() => { setQuery(''); setCategory('all'); setShowHighlighted(false); }}
                 className="rounded-xl"
                 style={{ background: 'var(--surface-hover)', color: 'var(--text-secondary)', border: '1px solid var(--divider)' }}
               >
-                Clear all filters
+                清除全部筛选
               </Button>
             </div>
           )}

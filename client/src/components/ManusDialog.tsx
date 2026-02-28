@@ -66,7 +66,7 @@ export function ManusDialog({
             </DialogTitle>
           ) : null}
           <DialogDescription className="text-sm text-[#858481] leading-5 tracking-[-0.154px]">
-            Please login with Manus to continue
+            请使用 Manus 登录以继续
           </DialogDescription>
         </div>
 
@@ -76,7 +76,7 @@ export function ManusDialog({
             onClick={onLogin}
             className="w-full h-10 bg-[#1a1a19] hover:bg-[#1a1a19]/90 text-white rounded-[10px] text-sm font-medium leading-5 tracking-[-0.154px]"
           >
-            Login with Manus
+            使用 Manus 登录
           </Button>
         </DialogFooter>
       </DialogContent>

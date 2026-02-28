@@ -39,8 +39,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: '首页' },
-    { href: '/skills', label: 'Skills' },
-    { href: '/upload', label: '上传' },
+    { href: '/skills', label: 'Skills 市场' },
+    { href: '/upload', label: '发布 Skill' },
   ];
 
   return (
@@ -55,7 +55,7 @@ export default function Navbar() {
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#007AFF] to-[#AF52DE] flex items-center justify-center shadow-lg shadow-[#007AFF]/20 group-hover:shadow-[#007AFF]/40 group-hover:scale-105 transition-all duration-300">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-300" style={{ background: 'linear-gradient(135deg, #d97757, #c86a45)', boxShadow: '0 4px 12px rgba(217,119,87,0.25)' }}>
               <span className="text-white font-bold text-sm font-display">S</span>
             </div>
             <span className="font-display font-semibold text-lg tracking-tight" style={{ color: 'var(--text-primary)' }}>
@@ -80,7 +80,7 @@ export default function Navbar() {
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0.5 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-[#007AFF] to-transparent" />
+                    <span className="absolute bottom-0.5 left-1/3 right-1/3 h-px" style={{ background: 'linear-gradient(to right, transparent, #d97757, transparent)' }} />
                   )}
                 </Link>
               );
@@ -108,7 +108,7 @@ export default function Navbar() {
               style={{ color: 'var(--text-muted)' }}
             >
               <Search className="w-3.5 h-3.5" />
-              <span>搜索 skills...</span>
+              <span>搜索 Skills...</span>
               <kbd className="ml-4 px-1.5 py-0.5 rounded text-[10px] font-mono" style={{ background: 'var(--surface-subtle)', color: 'var(--text-faint)', border: '1px solid var(--divider)' }}>
                 /
               </kbd>
@@ -130,7 +130,7 @@ export default function Navbar() {
               className="gap-2 bg-transparent transition-all duration-200"
               style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
               onClick={() => {
-                import('sonner').then(({ toast }) => toast('GitHub 登录即将上线'));
+                import('sonner').then(({ toast }) => toast('GitHub 登录即将上线，敬请期待'));
               }}
             >
               <Github className="w-4 h-4" />
@@ -202,13 +202,13 @@ export default function Navbar() {
                 variant="outline"
                 className="w-full gap-2 bg-transparent"
                 style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
-                onClick={() => {
-                  import('sonner').then(({ toast }) => toast('GitHub 登录即将上线'));
-                }}
-              >
-                <Github className="w-4 h-4" />
-                使用 GitHub 登录
-              </Button>
+              onClick={() => {
+                import('sonner').then(({ toast }) => toast('GitHub 登录即将上线，敬请期待'));
+              }}
+            >
+              <Github className="w-4 h-4" />
+              使用 GitHub 登录
+            </Button>
             </div>
           </div>
         </div>
