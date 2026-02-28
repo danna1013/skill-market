@@ -1,6 +1,5 @@
 /*
- * Design: Apple-style dual theme
- * StatsSection: Animated counters in glass panels with icons and glow accents
+ * Apple HIG Stats — clean counters, no visual noise
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -10,15 +9,14 @@ interface StatItem {
   label: string;
   value: number;
   suffix: string;
-  color: string;
   icon: React.ReactNode;
 }
 
 const stats: StatItem[] = [
-  { label: 'Total Skills', value: 12135, suffix: '+', color: '#007AFF', icon: <Package className="w-5 h-5" /> },
-  { label: 'Downloads', value: 2400000, suffix: '+', color: '#AF52DE', icon: <Download className="w-5 h-5" /> },
-  { label: 'Contributors', value: 3800, suffix: '+', color: '#FF9500', icon: <Users className="w-5 h-5" /> },
-  { label: 'Categories', value: 8, suffix: '', color: '#30D158', icon: <Grid3X3 className="w-5 h-5" /> },
+  { label: '在线技能', value: 12239, suffix: '+', icon: <Package className="w-5 h-5" /> },
+  { label: '累计下载', value: 2800000, suffix: '+', icon: <Download className="w-5 h-5" /> },
+  { label: '开发者', value: 4200, suffix: '+', icon: <Users className="w-5 h-5" /> },
+  { label: '分类', value: 8, suffix: '', icon: <Grid3X3 className="w-5 h-5" /> },
 ];
 
 function formatStatValue(value: number): string {
@@ -64,57 +62,44 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     return () => { if (el) observer.unobserve(el); };
   }, []);
 
-  const count = useCountUp(stat.value, 2200, visible);
+  const count = useCountUp(stat.value, 2400, visible);
 
   return (
     <div
       ref={ref}
-      className={`glass-panel glass-highlight p-6 sm:p-7 text-center relative overflow-hidden group ${
-        visible ? 'animate-fade-in-up' : 'opacity-0'
-      }`}
-      style={{ animationDelay: `${index * 120}ms` }}
+      className={`text-center py-8 ${visible ? 'animate-fade-in-up' : 'opacity-0'}`}
+      style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Background glow */}
       <div
-        className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[50px] opacity-0 group-hover:opacity-20 transition-opacity duration-700"
-        style={{ background: stat.color }}
-      />
-
-      {/* Icon */}
-      <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110"
-        style={{
-          background: `${stat.color}12`,
-          color: stat.color,
-          border: `1px solid ${stat.color}20`,
-        }}
+        className="w-10 h-10 rounded-2xl flex items-center justify-center mx-auto mb-4"
+        style={{ background: 'var(--surface-subtle)', color: 'var(--text-faint)' }}
       >
         {stat.icon}
       </div>
-
-      {/* Number */}
       <div
-        className="font-display font-bold text-3xl sm:text-4xl mb-1.5 tabular-nums"
-        style={{ color: stat.color }}
+        className="font-display font-bold text-[32px] sm:text-[38px] tracking-[-0.03em] mb-1 tabular-nums"
+        style={{ color: 'var(--text-primary)' }}
       >
         {formatStatValue(count)}{stat.suffix}
       </div>
-
-      {/* Label */}
-      <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
+      <div className="text-[13px]" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
     </div>
   );
 }
 
 export default function StatsSection() {
   return (
-    <section className="py-6 relative">
-      {/* Subtle divider glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px" style={{ background: 'linear-gradient(to right, transparent, var(--divider), transparent)' }} />
+    <section className="py-4 relative">
       <div className="container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0" style={{ borderTop: '1px solid var(--divider)', borderBottom: '1px solid var(--divider)' }}>
           {stats.map((stat, i) => (
-            <StatCard key={stat.label} stat={stat} index={i} />
+            <div
+              key={stat.label}
+              className={i < stats.length - 1 ? 'lg:border-r' : ''}
+              style={{ borderColor: 'var(--divider)' }}
+            >
+              <StatCard stat={stat} index={i} />
+            </div>
           ))}
         </div>
       </div>

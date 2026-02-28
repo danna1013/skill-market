@@ -1,13 +1,11 @@
 /*
- * Design: Apple-style dual theme
- * Hero: Immersive background with floating ambient orbs,
- * large gradient text headline, glass search capsule, install command
- * Light: soft pastel orbs on white; Dark: deep spatial orbs
+ * Apple HIG-inspired Hero
+ * Clean, confident, generous whitespace
  */
 
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
-import { Search, ArrowRight, Copy, Check, Sparkles } from 'lucide-react';
+import { Search, ArrowRight, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -38,56 +36,51 @@ function ParticleField() {
 
     const w = canvas.offsetWidth;
     const h = canvas.offsetHeight;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 40; i++) {
       particles.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.3 + 0.05,
         pulse: Math.random() * Math.PI * 2,
       });
     }
 
-    const particleColor = theme === 'dark' ? '120, 160, 255' : '0, 122, 255';
+    const particleColor = theme === 'dark' ? '100, 140, 255' : '0, 113, 227';
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-        p.pulse += 0.02;
-
+        p.pulse += 0.015;
         if (p.x < 0) p.x = w;
         if (p.x > w) p.x = 0;
         if (p.y < 0) p.y = h;
         if (p.y > h) p.y = 0;
-
         const currentAlpha = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${particleColor}, ${currentAlpha})`;
         ctx.fill();
       });
-
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < 100) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${particleColor}, ${0.03 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(${particleColor}, ${0.02 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
-
       animId = requestAnimationFrame(animate);
     };
     animate();
@@ -102,7 +95,7 @@ function ParticleField() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 0.45 }}
     />
   );
 }
@@ -115,9 +108,7 @@ export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   const installCommands = {
     npm: 'npx skillhub@latest install',
@@ -141,134 +132,133 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[94vh] flex items-center overflow-hidden">
-      {/* Background layers */}
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
-        {/* Dark mode: show image bg; Light mode: subtle gradient */}
         {theme === 'dark' && (
-          <img
-            src={HERO_BG}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-35"
-          />
+          <img src={HERO_BG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/10 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30" />
         <div className="absolute inset-0" style={{
           background: `radial-gradient(ellipse 70% 60% at 50% 45%, transparent 0%, var(--hero-vignette) 100%)`
         }} />
       </div>
 
-      {/* Floating orbs */}
+      {/* Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {theme === 'dark' && (
           <>
-            <img src={ORB_1} alt="" className="absolute -top-20 -right-20 w-[420px] h-[420px] opacity-18 animate-float-slow blur-sm" />
-            <img src={ORB_2} alt="" className="absolute -bottom-32 -left-20 w-[380px] h-[380px] opacity-12 animate-float-slower blur-sm" />
+            <img src={ORB_1} alt="" className="absolute -top-20 -right-20 w-[400px] h-[400px] opacity-15 animate-float-slow blur-sm" />
+            <img src={ORB_2} alt="" className="absolute -bottom-32 -left-20 w-[360px] h-[360px] opacity-10 animate-float-slower blur-sm" />
           </>
         )}
-        <div className={`absolute top-[20%] left-[20%] w-72 h-72 rounded-full blur-[100px] animate-float-slow ${
-          theme === 'dark' ? 'bg-[#007AFF]/6' : 'bg-[#007AFF]/8'
+        <div className={`absolute top-[22%] left-[18%] w-80 h-80 rounded-full blur-[120px] animate-float-slow ${
+          theme === 'dark' ? 'bg-[#0a84ff]/5' : 'bg-[#0071e3]/6'
         }`} />
-        <div className={`absolute bottom-[25%] right-[20%] w-56 h-56 rounded-full blur-[80px] animate-float-slower ${
-          theme === 'dark' ? 'bg-[#AF52DE]/6' : 'bg-[#AF52DE]/8'
-        }`} />
-        <div className={`absolute top-[60%] left-[55%] w-40 h-40 rounded-full blur-[60px] animate-float-slow ${
-          theme === 'dark' ? 'bg-[#5856D6]/5' : 'bg-[#5856D6]/6'
+        <div className={`absolute bottom-[20%] right-[18%] w-64 h-64 rounded-full blur-[100px] animate-float-slower ${
+          theme === 'dark' ? 'bg-[#bf5af2]/5' : 'bg-[#bf5af2]/5'
         }`} />
       </div>
 
       <ParticleField />
 
       {/* Content */}
-      <div className="container relative z-10 pt-28 pb-20">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container relative z-10 pt-32 pb-24">
+        <div className="max-w-3xl mx-auto text-center">
           {/* Badge */}
           <div
-            className={`inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-panel text-sm mb-10 transition-all duration-700 ${
+            className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-panel text-[13px] mb-12 transition-all duration-700 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#30D158] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#30D158]" />
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#30d158] opacity-60" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#30d158]" />
             </span>
-            <span style={{ color: 'var(--text-tertiary)' }} className="font-medium">12,000+ skills available</span>
+            <span style={{ color: 'var(--text-muted)' }}>12,239 skills and counting</span>
           </div>
 
           {/* Headline */}
           <h1
-            className={`font-display font-bold text-5xl sm:text-6xl lg:text-[4.5rem] leading-[1.05] tracking-[-0.03em] mb-7 transition-all duration-700 delay-100 ${
+            className={`font-display font-bold text-[2.75rem] sm:text-[3.5rem] lg:text-[4.25rem] leading-[1.08] tracking-[-0.035em] mb-6 transition-all duration-700 delay-100 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span style={{ color: 'var(--text-primary)' }}>The skill dock for</span>
-            <br className="sm:hidden" />
-            {' '}
-            <span className="gradient-text relative">
-              sharp agents
-              <Sparkles className="absolute -top-2 -right-6 w-5 h-5 text-[#FFD60A]/40 animate-pulse" />
+            <span style={{ color: 'var(--text-primary)' }}>
+              One install away from
+            </span>
+            <br />
+            <span className="gradient-text">
+              a smarter agent.
             </span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className={`text-lg sm:text-xl max-w-2xl mx-auto mb-12 leading-[1.7] font-light transition-all duration-700 delay-200 ${
+            className={`text-[17px] sm:text-[19px] max-w-lg mx-auto mb-14 leading-[1.65] transition-all duration-700 delay-200 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--text-muted)', fontWeight: 400 }}
           >
-            Discover, install, and share AI agent skills. Versioned like npm,
-            searchable with vectors. No gatekeeping, just signal.
+            开源技能，即装即用。让你的智能体做到更多。
           </p>
 
-          {/* Search bar */}
+          {/* Search */}
           <form
             onSubmit={handleSearch}
             className={`transition-all duration-700 delay-300 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="relative max-w-xl mx-auto search-glow rounded-2xl transition-all duration-300">
+            <div className="relative max-w-lg mx-auto search-glow rounded-2xl transition-all duration-300">
               <div className="glass-panel-strong glass-highlight rounded-2xl flex items-center px-5 py-4">
-                <Search className="w-5 h-5 shrink-0" style={{ color: 'var(--text-faint)' }} />
+                <Search className="w-[18px] h-[18px] shrink-0" style={{ color: 'var(--text-faint)' }} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search skills by name, description, or tag..."
-                  className="flex-1 bg-transparent border-none outline-none ml-3 text-sm"
-                  style={{ color: 'var(--text-primary)', '--tw-placeholder-color': 'var(--text-faint)' } as any}
+                  placeholder="搜索技能、标签或作者..."
+                  className="flex-1 bg-transparent border-none outline-none ml-3 text-[15px]"
+                  style={{ color: 'var(--text-primary)' }}
                 />
                 <Button
                   type="submit"
                   size="sm"
-                  className="shrink-0 bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-5 shadow-lg shadow-[#007AFF]/25 hover:shadow-[#007AFF]/40 transition-all duration-300"
+                  className="shrink-0 rounded-xl px-5 text-[13px] font-medium shadow-md transition-all duration-300"
+                  style={{
+                    background: 'var(--text-primary)',
+                    color: 'var(--background)',
+                  }}
                 >
-                  Search
+                  搜索
                   <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </Button>
               </div>
             </div>
           </form>
 
-          {/* CTA buttons */}
+          {/* CTA */}
           <div
-            className={`flex flex-wrap items-center justify-center gap-4 mt-8 transition-all duration-700 delay-[400ms] ${
+            className={`flex flex-wrap items-center justify-center gap-3 mt-8 transition-all duration-700 delay-[400ms] ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             <Button
               onClick={() => navigate('/skills')}
-              className="bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-7 py-5 text-sm font-medium shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 hover:scale-[1.02] transition-all duration-300"
+              className="rounded-full px-7 py-5 text-[14px] font-medium shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+              style={{
+                background: 'var(--text-primary)',
+                color: 'var(--background)',
+              }}
             >
               Browse Skills
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
             <Button
               variant="outline"
               onClick={() => navigate('/upload')}
-              className="bg-transparent rounded-xl px-7 py-5 text-sm transition-all duration-300"
+              className="rounded-full px-7 py-5 text-[14px] font-medium bg-transparent transition-all duration-300"
               style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
             >
               Publish a Skill
@@ -277,42 +267,43 @@ export default function HeroSection() {
 
           {/* Install command */}
           <div
-            className={`mt-14 max-w-md mx-auto transition-all duration-700 delay-500 ${
+            className={`mt-16 max-w-md mx-auto transition-all duration-700 delay-500 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="glass-panel rounded-xl overflow-hidden">
+            <div className="glass-panel rounded-2xl overflow-hidden">
               <div className="flex" style={{ borderBottom: '1px solid var(--divider)' }}>
                 {(['npm', 'pnpm', 'bun'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`flex-1 px-4 py-2.5 text-xs font-mono font-medium transition-all duration-200 relative ${
-                      activeTab === tab
-                        ? 'bg-[var(--surface-active)]'
-                        : 'hover:bg-[var(--surface-hover)]'
+                    className={`flex-1 px-4 py-2.5 text-[12px] font-mono font-medium transition-all duration-200 relative ${
+                      activeTab === tab ? '' : 'hover:bg-[var(--surface-hover)]'
                     }`}
-                    style={{ color: activeTab === tab ? 'var(--text-primary)' : 'var(--text-faint)' }}
+                    style={{
+                      color: activeTab === tab ? 'var(--text-primary)' : 'var(--text-faint)',
+                      background: activeTab === tab ? 'var(--surface-active)' : 'transparent',
+                    }}
                   >
                     {tab}
                     {activeTab === tab && (
-                      <span className="absolute bottom-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#007AFF]/50 to-transparent" />
+                      <span className="absolute bottom-0 left-1/4 right-1/4 h-[1.5px] rounded-full" style={{ background: 'var(--text-primary)' }} />
                     )}
                   </button>
                 ))}
               </div>
-              <div className="flex items-center justify-between px-4 py-3.5">
-                <code className="font-mono text-sm" style={{ color: 'var(--text-tertiary)' }}>
+              <div className="flex items-center justify-between px-5 py-3.5">
+                <code className="font-mono text-[13px]" style={{ color: 'var(--text-tertiary)' }}>
                   {installCommands[activeTab]}
                 </code>
                 <button
                   onClick={handleCopy}
-                  className="p-1.5 rounded-md hover:bg-[var(--surface-hover)] transition-all duration-200"
+                  className="p-1.5 rounded-lg hover:bg-[var(--surface-hover)] transition-all duration-200"
                   style={{ color: 'var(--text-faint)' }}
-                  aria-label="Copy command"
+                  aria-label="复制命令"
                 >
                   {copied ? (
-                    <Check className="w-3.5 h-3.5 text-[#30D158]" />
+                    <Check className="w-3.5 h-3.5 text-[#30d158]" />
                   ) : (
                     <Copy className="w-3.5 h-3.5" />
                   )}
@@ -324,7 +315,7 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </section>
   );
 }

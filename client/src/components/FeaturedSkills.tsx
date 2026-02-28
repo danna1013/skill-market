@@ -1,7 +1,5 @@
 /*
- * Design: Apple-style dual theme
- * FeaturedSkills: Horizontal scroll carousel of highlighted skills
- * with larger glass cards, category color accents, scroll indicators
+ * Apple HIG Featured Skills — horizontal carousel, clean cards
  */
 
 import { Star, Download, ArrowRight, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -12,14 +10,14 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 const featured = skills.filter(s => s.highlighted);
 
 const categoryColors: Record<string, string> = {
-  'dev-tools': '#007AFF',
-  'ai-ml': '#AF52DE',
-  'productivity': '#FF9500',
-  'search': '#30D158',
-  'communication': '#FF2D55',
-  'security': '#FF3B30',
-  'automation': '#5856D6',
-  'media': '#FF9500',
+  'dev-tools': '#0071e3',
+  'ai-ml': '#bf5af2',
+  'productivity': '#ff9500',
+  'search': '#30d158',
+  'communication': '#ff2d55',
+  'security': '#ff3b30',
+  'automation': '#5856d6',
+  'media': '#ff9500',
 };
 
 export default function FeaturedSkills() {
@@ -60,117 +58,109 @@ export default function FeaturedSkills() {
   };
 
   return (
-    <section className="py-20 relative">
-      {/* Section header */}
-      <div className="container mb-10">
+    <section className="py-24 relative">
+      <div className="container mb-12">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="font-display font-bold text-[28px] sm:text-[36px] tracking-[-0.03em]" style={{ color: 'var(--text-primary)' }}>
               Highlighted Skills
             </h2>
-            <p className="mt-2 text-base" style={{ color: 'var(--text-muted)' }}>
-              Curated signal — highlighted for quick trust.
+            <p className="mt-2 text-[15px]" style={{ color: 'var(--text-muted)' }}>
+              编辑精选，品质保证。
             </p>
           </div>
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2">
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
-              className="p-2 rounded-xl glass-panel transition-all duration-200 disabled:opacity-30"
-              style={{ color: 'var(--text-secondary)' }}
-              aria-label="Scroll left"
+              className="p-2 rounded-full transition-all duration-200 disabled:opacity-20 hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-muted)' }}
+              aria-label="向左"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
-              className="p-2 rounded-xl glass-panel transition-all duration-200 disabled:opacity-30"
-              style={{ color: 'var(--text-secondary)' }}
-              aria-label="Scroll right"
+              className="p-2 rounded-full transition-all duration-200 disabled:opacity-20 hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-muted)' }}
+              aria-label="向右"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
             <Link
               href="/skills"
-              className="flex items-center gap-1.5 text-sm text-[#007AFF] hover:text-[#0071E3] transition-colors font-medium ml-2"
+              className="flex items-center gap-1 text-[13px] font-medium transition-colors ml-2 hover:opacity-70"
+              style={{ color: 'var(--text-muted)' }}
             >
-              View all
-              <ArrowRight className="w-4 h-4" />
+              全部
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Scroll fade edges */}
+      {/* Scroll area */}
       <div className="relative">
         {canScrollLeft && (
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         )}
         {canScrollRight && (
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
         )}
 
-        {/* Horizontal scroll */}
         <div
           ref={scrollRef}
-          className="flex gap-5 overflow-x-auto pb-4 px-4 lg:px-[max(1rem,calc((100vw-1280px)/2+2rem))] snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-5 overflow-x-auto pb-4 px-5 lg:px-[max(1.25rem,calc((100vw-1120px)/2+2.5rem))] snap-x snap-mandatory scrollbar-hide"
         >
           {featured.map((skill, i) => {
-            const color = categoryColors[skill.category] || '#007AFF';
+            const color = categoryColors[skill.category] || '#0071e3';
             return (
               <Link
                 key={skill.id}
                 href={`/skill/${skill.slug}`}
-                className={`shrink-0 w-[320px] sm:w-[360px] snap-start ${
+                className={`shrink-0 w-[300px] sm:w-[340px] snap-start ${
                   visible ? 'animate-fade-in-up' : 'opacity-0'
                 }`}
                 style={{ animationDelay: `${i * 80}ms` }}
               >
                 <div className="skill-card glass-panel glass-highlight p-6 h-full flex flex-col gap-4 group relative overflow-hidden">
-                  {/* Glow accent */}
+                  {/* Glow */}
                   <div
-                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-15 group-hover:opacity-25 transition-opacity duration-500"
+                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity duration-700"
                     style={{ background: color }}
                   />
 
-                  {/* Top row */}
+                  {/* Header */}
                   <div className="flex items-start justify-between relative z-10">
-                    <div>
-                      <div className="flex items-center gap-2.5 mb-1">
-                        <div
-                          className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-bold font-display shadow-md group-hover:scale-105 transition-transform duration-300"
-                          style={{
-                            background: `linear-gradient(135deg, ${color}, ${color}80)`,
-                            boxShadow: `0 4px 12px ${color}25`,
-                          }}
-                        >
-                          {skill.name[0]}
-                        </div>
-                        <div>
-                          <h3 className="font-display font-semibold text-base" style={{ color: 'var(--text-primary)' }}>
-                            {skill.name}
-                          </h3>
-                          <span className="font-mono text-[11px]" style={{ color: 'var(--text-faint)' }}>
-                            /{skill.slug}
-                          </span>
-                        </div>
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-[13px] font-bold font-display group-hover:scale-105 transition-transform duration-300"
+                        style={{
+                          background: `linear-gradient(135deg, ${color}, ${color}88)`,
+                        }}
+                      >
+                        {skill.name[0]}
+                      </div>
+                      <div>
+                        <h3 className="font-display font-semibold text-[15px]" style={{ color: 'var(--text-primary)' }}>
+                          {skill.name}
+                        </h3>
+                        <span className="font-mono text-[11px]" style={{ color: 'var(--text-faint)' }}>
+                          /{skill.slug}
+                        </span>
                       </div>
                     </div>
                     <span
-                      className="px-2 py-0.5 rounded-md text-[10px] font-mono font-medium"
-                      style={{
-                        background: `${color}12`,
-                        color: color,
-                        border: `1px solid ${color}20`,
-                      }}
+                      className="px-2 py-0.5 rounded-md text-[10px] font-mono"
+                      style={{ background: `${color}10`, color: `${color}CC` }}
                     >
                       {skill.currentVersion}
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm leading-relaxed line-clamp-3 flex-1 relative z-10" style={{ color: 'var(--text-muted)' }}>
+                  <p className="text-[13px] leading-relaxed line-clamp-3 flex-1 relative z-10" style={{ color: 'var(--text-muted)' }}>
                     {skill.description}
                   </p>
 
@@ -189,22 +179,14 @@ export default function FeaturedSkills() {
 
                   {/* Footer */}
                   <div className="flex items-center justify-between pt-3 relative z-10" style={{ borderTop: '1px solid var(--divider)' }}>
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold text-white"
-                        style={{ background: `linear-gradient(135deg, ${color}80, ${color}40)` }}
-                      >
-                        {skill.author[0].toUpperCase()}
-                      </div>
-                      <span className="text-xs" style={{ color: 'var(--text-faint)' }}>@{skill.author}</span>
-                    </div>
+                    <span className="text-[12px]" style={{ color: 'var(--text-faint)' }}>@{skill.author}</span>
                     <div className="flex items-center gap-3">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/50" />
-                      <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
-                        <Star className="w-3 h-3 fill-current text-[#FFD60A]/55" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#30d158]/50" />
+                      <span className="flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-faint)' }}>
+                        <Star className="w-3 h-3 fill-current text-[#FFD60A]/50" />
                         {formatNumber(skill.stars)}
                       </span>
-                      <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
+                      <span className="flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-faint)' }}>
                         <Download className="w-3 h-3" />
                         {formatNumber(skill.downloads)}
                       </span>
@@ -217,14 +199,14 @@ export default function FeaturedSkills() {
         </div>
       </div>
 
-      {/* Mobile view all */}
-      <div className="sm:hidden container mt-4">
+      <div className="sm:hidden container mt-6">
         <Link
           href="/skills"
-          className="flex items-center justify-center gap-1.5 text-sm text-[#007AFF] font-medium"
+          className="flex items-center justify-center gap-1 text-[13px] font-medium"
+          style={{ color: 'var(--text-muted)' }}
         >
-          View all skills
-          <ArrowRight className="w-4 h-4" />
+          查看全部
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </section>

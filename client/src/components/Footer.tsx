@@ -1,134 +1,89 @@
 /*
- * Design: Apple-style dual theme
- * Footer: Multi-column footer with OpenClaw & Tencent Cloud resource links
+ * Apple HIG Footer — minimal, structured, quiet
  */
 
-import { ExternalLink, BookOpen, Gift, Sparkles, MessageCircle, Bot } from 'lucide-react';
+import { BookOpen, Gift, Sparkles, Bot } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Footer() {
   return (
     <footer className="relative mt-8">
-      {/* Top gradient divider */}
-      <div className="w-full h-px" style={{ background: 'linear-gradient(to right, transparent, var(--divider), transparent)' }} />
+      <div className="w-full h-px" style={{ background: 'var(--divider)' }} />
 
-      <div className="py-14">
+      <div className="py-12">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-14">
             {/* Brand */}
             <div className="md:col-span-1">
-              <Link href="/" className="flex items-center gap-2.5 mb-5 group">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#007AFF] to-[#AF52DE] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                  <span className="text-white font-bold text-xs font-display">S</span>
+              <Link href="/" className="flex items-center gap-2 mb-4 group">
+                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#0071e3] to-[#bf5af2] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-white font-bold text-[9px] font-display">S</span>
                 </div>
-                <span className="font-display font-semibold text-base" style={{ color: 'var(--text-primary)' }}>
+                <span className="font-display font-semibold text-[15px] tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
                   Skill<span className="gradient-text">Hub</span>
                 </span>
               </Link>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
-                The open marketplace for AI agent skills. Discover, share, and compose.
+              <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                开放的 AI 智能体技能市场。
               </p>
-              <div className="flex items-center gap-3">
-                <a
-                  href="https://s.ddnsip.cn/openclaw"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
-                  style={{ color: 'var(--text-faint)' }}
-                  aria-label="OpenClaw AI 助手"
-                >
-                  <Bot className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://cloud.tencent.com/developer/article/2624973"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
-                  style={{ color: 'var(--text-faint)' }}
-                  aria-label="教程合集"
-                >
-                  <BookOpen className="w-4 h-4" />
-                </a>
-              </div>
             </div>
 
-            {/* Product links */}
+            {/* Explore */}
             <div>
-              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>产品</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/skills" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}>
-                    Browse Skills
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/skills" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}>
-                    Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/skills" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}>
-                    Highlighted
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/upload" className="text-sm transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-muted)' }}>
-                    Upload Skill
-                  </Link>
-                </li>
+              <h4 className="font-display font-semibold text-[12px] uppercase tracking-wider mb-4" style={{ color: 'var(--text-faint)' }}>探索</h4>
+              <ul className="space-y-2.5">
+                <li><Link href="/skills" className="text-[13px] transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>全部技能</Link></li>
+                <li><Link href="/skills" className="text-[13px] transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>精选推荐</Link></li>
+                <li><Link href="/upload" className="text-[13px] transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>发布技能</Link></li>
               </ul>
             </div>
 
-            {/* OpenClaw & Resources */}
+            {/* Resources */}
             <div>
-              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>OpenClaw</h4>
-              <ul className="space-y-3">
+              <h4 className="font-display font-semibold text-[12px] uppercase tracking-wider mb-4" style={{ color: 'var(--text-faint)' }}>资源</h4>
+              <ul className="space-y-2.5">
                 <li>
-                  <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
-                    <Bot className="w-3 h-3" />
-                    AI 助手咨询
+                  <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-[13px] inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>
+                    <Bot className="w-3 h-3" /> OpenClaw AI
                   </a>
                 </li>
                 <li>
-                  <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
-                    <BookOpen className="w-3 h-3" />
-                    教程合集
+                  <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-[13px] inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>
+                    <BookOpen className="w-3 h-3" /> 教程
                   </a>
                 </li>
               </ul>
             </div>
 
-            {/* Activities */}
+            {/* Community */}
             <div>
-              <h4 className="font-display font-semibold text-sm mb-5" style={{ color: 'var(--text-secondary)' }}>活动</h4>
-              <ul className="space-y-3">
+              <h4 className="font-display font-semibold text-[12px] uppercase tracking-wider mb-4" style={{ color: 'var(--text-faint)' }}>社区</h4>
+              <ul className="space-y-2.5">
                 <li>
-                  <a href="https://mc.tencent.com/HZjnvIK8" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
-                    <Gift className="w-3 h-3" />
-                    最新活动速递
+                  <a href="https://mc.tencent.com/HZjnvIK8" target="_blank" rel="noopener noreferrer" className="text-[13px] inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>
+                    <Gift className="w-3 h-3" /> 活动
                   </a>
                 </li>
                 <li>
-                  <a href="https://mc.tencent.com/qxkewwOs" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-200 hover:text-[#007AFF] inline-flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
-                    <Sparkles className="w-3 h-3" />
-                    创意征文赛赢大奖
+                  <a href="https://mc.tencent.com/qxkewwOs" target="_blank" rel="noopener noreferrer" className="text-[13px] inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--text-primary)]" style={{ color: 'var(--text-muted)' }}>
+                    <Sparkles className="w-3 h-3" /> 征文
                   </a>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* Bottom bar */}
-          <div className="mt-14 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: '1px solid var(--divider)' }}>
-            <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
-              &copy; {new Date().getFullYear()} SkillHub. All rights reserved.
+          {/* Bottom */}
+          <div className="mt-12 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid var(--divider)' }}>
+            <p className="text-[11px]" style={{ color: 'var(--text-faint)' }}>
+              &copy; {new Date().getFullYear()} SkillHub
             </p>
-            <div className="flex items-center gap-5">
-              <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}>
+            <div className="flex items-center gap-4">
+              <a href="https://s.ddnsip.cn/openclaw" target="_blank" rel="noopener noreferrer" className="text-[11px] transition-colors duration-200 hover:text-[var(--text-muted)]" style={{ color: 'var(--text-faint)' }}>
                 OpenClaw
               </a>
-              <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors duration-200 hover:text-[#007AFF]" style={{ color: 'var(--text-faint)' }}>
-                Docs
+              <a href="https://cloud.tencent.com/developer/article/2624973" target="_blank" rel="noopener noreferrer" className="text-[11px] transition-colors duration-200 hover:text-[var(--text-muted)]" style={{ color: 'var(--text-faint)' }}>
+                文档
               </a>
             </div>
           </div>
