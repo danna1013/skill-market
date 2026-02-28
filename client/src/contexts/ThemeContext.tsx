@@ -10,6 +10,9 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+// Bump this version to force a theme reset for all users
+const THEME_VERSION = "2";
+
 interface ThemeProviderProps {
   children: React.ReactNode;
   defaultTheme?: Theme;
@@ -23,6 +26,13 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
+      const storedVersion = localStorage.getItem("theme-version");
+      // If version mismatch, reset to defaultTheme
+      if (storedVersion !== THEME_VERSION) {
+        localStorage.setItem("theme", defaultTheme);
+        localStorage.setItem("theme-version", THEME_VERSION);
+        return defaultTheme;
+      }
       const stored = localStorage.getItem("theme");
       return (stored as Theme) || defaultTheme;
     }
@@ -39,6 +49,7 @@ export function ThemeProvider({
 
     if (switchable) {
       localStorage.setItem("theme", theme);
+      localStorage.setItem("theme-version", THEME_VERSION);
     }
   }, [theme, switchable]);
 

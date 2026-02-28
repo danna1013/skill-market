@@ -16,11 +16,20 @@
 
   <body>
     <script>
-      // Ensure dark mode is applied before React hydrates to prevent flash
+      // Theme initialization: dark by default, respect user preference only if version matches
       (function() {
-        var theme = localStorage.getItem('theme');
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
+        var THEME_VERSION = '2';
+        var storedVersion = localStorage.getItem('theme-version');
+        if (storedVersion !== THEME_VERSION) {
+          // Version mismatch: reset to dark
+          localStorage.setItem('theme', 'dark');
+          localStorage.setItem('theme-version', THEME_VERSION);
+          // dark class is already on html tag
+        } else {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+          }
         }
       })();
     </script>
