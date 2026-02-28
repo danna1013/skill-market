@@ -49,7 +49,7 @@ function ThemedToaster() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light" switchable>
+      <ThemeProvider defaultTheme="dark" switchable>
         <TooltipProvider>
           <ThemedToaster />
           <Router />
