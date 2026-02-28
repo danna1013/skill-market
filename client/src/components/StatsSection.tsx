@@ -1,5 +1,5 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
+ * Design: Apple-style dual theme
  * StatsSection: Animated counters in glass panels with icons and glow accents
  */
 
@@ -38,7 +38,6 @@ function useCountUp(end: number, duration: number, start: boolean) {
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      // Smooth ease-out-expo
       const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCurrent(Math.floor(eased * end));
       if (progress < 1) frame = requestAnimationFrame(animate);
@@ -102,7 +101,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
       </div>
 
       {/* Label */}
-      <div className="text-sm text-white/35 font-medium">{stat.label}</div>
+      <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
     </div>
   );
 }
@@ -111,7 +110,7 @@ export default function StatsSection() {
   return (
     <section className="py-6 relative">
       {/* Subtle divider glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px" style={{ background: 'linear-gradient(to right, transparent, var(--divider), transparent)' }} />
       <div className="container">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, i) => (

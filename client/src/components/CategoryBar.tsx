@@ -1,5 +1,5 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
+ * Design: Apple-style dual theme
  * CategoryBar: Horizontal scrolling category pills with icon + count
  */
 
@@ -38,18 +38,36 @@ export default function CategoryBar({ activeCategory, onCategoryChange }: Catego
           <button
             key={cat.id}
             onClick={() => onCategoryChange(cat.id)}
-            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border ${
+            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
               isActive
-                ? 'bg-white/10 border-white/15 text-white shadow-lg'
-                : 'bg-white/[3%] border-white/5 text-white/45 hover:bg-white/[6%] hover:text-white/65 hover:border-white/10'
+                ? 'shadow-lg'
+                : 'glass-panel hover:scale-[1.02]'
             }`}
-            style={isActive ? { boxShadow: `0 0 20px ${cat.color}15` } : undefined}
+            style={
+              isActive
+                ? {
+                    background: `linear-gradient(135deg, ${cat.color}, ${cat.color}cc)`,
+                    color: '#fff',
+                    boxShadow: `0 4px 12px ${cat.color}30`,
+                    border: 'none',
+                  }
+                : {
+                    color: 'var(--text-tertiary)',
+                  }
+            }
           >
-            <span style={{ color: isActive ? cat.color : undefined }}>
+            <span style={{ color: isActive ? '#fff' : cat.color }}>
               {iconMap[cat.icon]}
             </span>
             <span>{cat.name}</span>
-            <span className={`text-xs ${isActive ? 'text-white/40' : 'text-white/20'}`}>
+            <span
+              className="text-xs"
+              style={
+                isActive
+                  ? { color: 'rgba(255,255,255,0.7)' }
+                  : { color: 'var(--text-faint)' }
+              }
+            >
               {cat.count.toLocaleString()}
             </span>
           </button>

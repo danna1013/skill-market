@@ -1,5 +1,5 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
+ * Design: Apple-style dual theme
  * FeaturedSkills: Horizontal scroll carousel of highlighted skills
  * with larger glass cards, category color accents, scroll indicators
  */
@@ -65,21 +65,19 @@ export default function FeaturedSkills() {
       <div className="container mb-10">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.02em]">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
               Highlighted Skills
             </h2>
-            <p className="text-white/35 mt-2 text-base">
+            <p className="mt-2 text-base" style={{ color: 'var(--text-muted)' }}>
               Curated signal — highlighted for quick trust.
             </p>
           </div>
           <div className="hidden sm:flex items-center gap-3">
-            {/* Scroll arrows */}
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
-              className={`p-2 rounded-xl glass-panel transition-all duration-200 ${
-                canScrollLeft ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-white/15 cursor-not-allowed'
-              }`}
+              className="p-2 rounded-xl glass-panel transition-all duration-200 disabled:opacity-30"
+              style={{ color: 'var(--text-secondary)' }}
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -87,9 +85,8 @@ export default function FeaturedSkills() {
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
-              className={`p-2 rounded-xl glass-panel transition-all duration-200 ${
-                canScrollRight ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-white/15 cursor-not-allowed'
-              }`}
+              className="p-2 rounded-xl glass-panel transition-all duration-200 disabled:opacity-30"
+              style={{ color: 'var(--text-secondary)' }}
               aria-label="Scroll right"
             >
               <ChevronRight className="w-4 h-4" />
@@ -151,10 +148,10 @@ export default function FeaturedSkills() {
                           {skill.name[0]}
                         </div>
                         <div>
-                          <h3 className="font-display font-semibold text-white text-base">
+                          <h3 className="font-display font-semibold text-base" style={{ color: 'var(--text-primary)' }}>
                             {skill.name}
                           </h3>
-                          <span className="font-mono text-[11px] text-white/20">
+                          <span className="font-mono text-[11px]" style={{ color: 'var(--text-faint)' }}>
                             /{skill.slug}
                           </span>
                         </div>
@@ -173,7 +170,7 @@ export default function FeaturedSkills() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-white/40 leading-relaxed line-clamp-3 flex-1 relative z-10">
+                  <p className="text-sm leading-relaxed line-clamp-3 flex-1 relative z-10" style={{ color: 'var(--text-muted)' }}>
                     {skill.description}
                   </p>
 
@@ -182,7 +179,8 @@ export default function FeaturedSkills() {
                     {skill.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-md text-[11px] bg-white/[4%] text-white/30 border border-white/[5%]"
+                        className="px-2 py-0.5 rounded-md text-[11px]"
+                        style={{ background: 'var(--surface-subtle)', color: 'var(--text-faint)', border: '1px solid var(--divider)' }}
                       >
                         {tag}
                       </span>
@@ -190,7 +188,7 @@ export default function FeaturedSkills() {
                   </div>
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between pt-3 border-t border-white/[5%] relative z-10">
+                  <div className="flex items-center justify-between pt-3 relative z-10" style={{ borderTop: '1px solid var(--divider)' }}>
                     <div className="flex items-center gap-2">
                       <div
                         className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold text-white"
@@ -198,15 +196,15 @@ export default function FeaturedSkills() {
                       >
                         {skill.author[0].toUpperCase()}
                       </div>
-                      <span className="text-xs text-white/30">@{skill.author}</span>
+                      <span className="text-xs" style={{ color: 'var(--text-faint)' }}>@{skill.author}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/40" />
-                      <span className="flex items-center gap-1 text-xs text-white/25">
-                        <Star className="w-3 h-3 fill-current text-[#FFD60A]/45" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/50" />
+                      <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
+                        <Star className="w-3 h-3 fill-current text-[#FFD60A]/55" />
                         {formatNumber(skill.stars)}
                       </span>
-                      <span className="flex items-center gap-1 text-xs text-white/25">
+                      <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
                         <Download className="w-3 h-3" />
                         {formatNumber(skill.downloads)}
                       </span>

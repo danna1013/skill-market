@@ -1,7 +1,6 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
+ * Design: Apple-style dual theme
  * Skills page: Full browsing experience with search, filters, sort, view toggle
- * Enhanced: Better list view, result count animation, refined empty state
  */
 
 import { useState, useMemo, useEffect, useRef } from 'react';
@@ -57,10 +56,10 @@ function SkillListItem({ skill }: { skill: Skill }) {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <h3 className="font-display font-semibold text-sm text-white truncate">
+            <h3 className="font-display font-semibold text-sm truncate" style={{ color: 'var(--text-primary)' }}>
               {skill.name}
             </h3>
-            <span className="font-mono text-[10px] text-white/20">
+            <span className="font-mono text-[10px]" style={{ color: 'var(--text-faint)' }}>
               {skill.currentVersion}
             </span>
             {skill.highlighted && (
@@ -69,28 +68,28 @@ function SkillListItem({ skill }: { skill: Skill }) {
               </span>
             )}
           </div>
-          <p className="text-xs text-white/35 truncate">
+          <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
             {skill.description}
           </p>
         </div>
 
         {/* Stats */}
         <div className="hidden sm:flex items-center gap-4 shrink-0">
-          <span className="text-xs text-white/30 flex items-center gap-1">
+          <span className="text-xs flex items-center gap-1" style={{ color: 'var(--text-faint)' }}>
             @{skill.author}
           </span>
           {skill.securityStatus === 'benign' && (
-            <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/45" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/55" />
           )}
-          <span className="flex items-center gap-1 text-xs text-white/25">
-            <Star className="w-3 h-3 fill-current text-[#FFD60A]/45" />
+          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
+            <Star className="w-3 h-3 fill-current text-[#FFD60A]/55" />
             {formatNumber(skill.stars)}
           </span>
-          <span className="flex items-center gap-1 text-xs text-white/25">
+          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-faint)' }}>
             <Download className="w-3 h-3" />
             {formatNumber(skill.downloads)}
           </span>
-          <ArrowRight className="w-3.5 h-3.5 text-white/15 group-hover:text-white/40 transition-colors" />
+          <ArrowRight className="w-3.5 h-3.5 transition-colors" style={{ color: 'var(--text-faint)' }} />
         </div>
       </div>
     </Link>
@@ -131,13 +130,13 @@ export default function Skills() {
         <div className="container">
           {/* Page header */}
           <div className="mb-8">
-            <h1 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.02em]">
+            <h1 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
               Browse Skills
             </h1>
-            <p className="text-white/35 mt-2">
-              <span className="text-white/55 font-medium">{filtered.length}</span> skill{filtered.length !== 1 ? 's' : ''} found
+            <p className="mt-2" style={{ color: 'var(--text-muted)' }}>
+              <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>{filtered.length}</span> skill{filtered.length !== 1 ? 's' : ''} found
               {query && (
-                <span className="text-white/25"> for &ldquo;<span className="text-white/45">{query}</span>&rdquo;</span>
+                <span style={{ color: 'var(--text-faint)' }}> for &ldquo;<span style={{ color: 'var(--text-secondary)' }}>{query}</span>&rdquo;</span>
               )}
             </p>
           </div>
@@ -147,19 +146,21 @@ export default function Skills() {
             {/* Search */}
             <div className="relative search-glow rounded-xl transition-all duration-300">
               <div className="glass-panel glass-highlight flex items-center px-4 py-3.5 rounded-xl">
-                <Search className="w-4.5 h-4.5 text-white/25 shrink-0" />
+                <Search className="w-4.5 h-4.5 shrink-0" style={{ color: 'var(--text-faint)' }} />
                 <input
                   ref={inputRef}
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Search by name, description, tag, or author..."
-                  className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/20 ml-3 text-sm"
+                  className="flex-1 bg-transparent border-none outline-none ml-3 text-sm"
+                  style={{ color: 'var(--text-primary)' }}
                 />
                 {query && (
                   <button
                     onClick={() => setQuery('')}
-                    className="p-1.5 rounded-md hover:bg-white/5 text-white/25 hover:text-white/55 transition-all duration-200"
+                    className="p-1.5 rounded-md transition-all duration-200 hover:bg-[var(--surface-hover)]"
+                    style={{ color: 'var(--text-faint)' }}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -178,21 +179,26 @@ export default function Skills() {
               <div className="shrink-0 flex items-center gap-2">
                 {/* Sort dropdown */}
                 <div className="relative group">
-                  <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg glass-panel text-sm text-white/45 hover:text-white/65 transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg glass-panel text-sm transition-colors" style={{ color: 'var(--text-muted)' }}>
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">{sortLabel}</span>
                     <ChevronDown className="w-3 h-3" />
                   </button>
-                  <div className="absolute right-0 top-full mt-2 w-48 glass-panel-strong rounded-xl p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20 shadow-xl shadow-black/30">
+                  <div className="absolute right-0 top-full mt-2 w-48 glass-panel-strong rounded-xl p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20 shadow-xl">
                     {sortOptions.map(opt => (
                       <button
                         key={opt.value}
                         onClick={() => setSort(opt.value)}
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           sort === opt.value
-                            ? 'text-white bg-white/10'
-                            : 'text-white/45 hover:text-white/65 hover:bg-white/5'
+                            ? 'text-[#007AFF] font-medium'
+                            : ''
                         }`}
+                        style={
+                          sort === opt.value
+                            ? { background: 'var(--surface-hover)' }
+                            : { color: 'var(--text-muted)' }
+                        }
                       >
                         {opt.label}
                       </button>
@@ -206,8 +212,9 @@ export default function Skills() {
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border ${
                     showHighlighted
                       ? 'bg-[#007AFF]/15 border-[#007AFF]/30 text-[#007AFF]'
-                      : 'glass-panel text-white/45 hover:text-white/65'
+                      : 'glass-panel'
                   }`}
+                  style={!showHighlighted ? { color: 'var(--text-muted)' } : undefined}
                 >
                   <span className="hidden sm:inline">Highlighted</span>
                   <span className="sm:hidden">★</span>
@@ -218,8 +225,13 @@ export default function Skills() {
                   <button
                     onClick={() => setView('grid')}
                     className={`p-2 transition-colors ${
-                      view === 'grid' ? 'bg-white/10 text-white' : 'text-white/25 hover:text-white/45'
+                      view === 'grid' ? 'text-[#007AFF]' : ''
                     }`}
+                    style={
+                      view === 'grid'
+                        ? { background: 'var(--surface-hover)' }
+                        : { color: 'var(--text-faint)' }
+                    }
                     aria-label="Grid view"
                   >
                     <Grid3X3 className="w-4 h-4" />
@@ -227,8 +239,13 @@ export default function Skills() {
                   <button
                     onClick={() => setView('list')}
                     className={`p-2 transition-colors ${
-                      view === 'list' ? 'bg-white/10 text-white' : 'text-white/25 hover:text-white/45'
+                      view === 'list' ? 'text-[#007AFF]' : ''
                     }`}
+                    style={
+                      view === 'list'
+                        ? { background: 'var(--surface-hover)' }
+                        : { color: 'var(--text-faint)' }
+                    }
                     aria-label="List view"
                   >
                     <List className="w-4 h-4" />
@@ -263,16 +280,17 @@ export default function Skills() {
             </div>
           ) : (
             <div className="glass-panel glass-highlight p-16 text-center animate-fade-in-up">
-              <Search className="w-12 h-12 mx-auto text-white/15 mb-5" />
-              <h3 className="font-display font-semibold text-lg text-white/55 mb-2">
+              <Search className="w-12 h-12 mx-auto mb-5" style={{ color: 'var(--text-faint)' }} />
+              <h3 className="font-display font-semibold text-lg mb-2" style={{ color: 'var(--text-secondary)' }}>
                 No skills found
               </h3>
-              <p className="text-sm text-white/25 max-w-md mx-auto mb-6">
+              <p className="text-sm max-w-md mx-auto mb-6" style={{ color: 'var(--text-muted)' }}>
                 Try adjusting your search query or filters. You can also browse all categories.
               </p>
               <Button
                 onClick={() => { setQuery(''); setCategory('all'); setShowHighlighted(false); }}
-                className="bg-white/5 hover:bg-white/10 text-white/55 border border-white/10 rounded-xl"
+                className="rounded-xl"
+                style={{ background: 'var(--surface-hover)', color: 'var(--text-secondary)', border: '1px solid var(--divider)' }}
               >
                 Clear all filters
               </Button>

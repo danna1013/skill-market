@@ -1,18 +1,19 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
- * Navbar: Frosted glass floating navbar with specular highlight
- * Enhanced: Keyboard shortcut, refined transitions, active indicator
+ * Design: Apple-style dual theme (Light default / Dark spatial glass)
+ * Navbar: Frosted glass floating navbar with theme toggle and Tencent Cloud links
  */
 
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Search, Menu, X, Github } from 'lucide-react';
+import { Search, Menu, X, Github, Sun, Moon, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [location, navigate] = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -20,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Keyboard shortcut: "/" to focus search
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
       e.preventDefault();
@@ -33,22 +33,21 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location]);
 
   const navLinks = [
-    { href: '/', label: 'Home' },
+    { href: '/', label: '首页' },
     { href: '/skills', label: 'Skills' },
-    { href: '/upload', label: 'Upload' },
+    { href: '/upload', label: '上传' },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'glass-panel-strong shadow-lg shadow-black/20'
+          ? 'glass-panel-strong shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -59,7 +58,7 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#007AFF] to-[#AF52DE] flex items-center justify-center shadow-lg shadow-[#007AFF]/20 group-hover:shadow-[#007AFF]/40 group-hover:scale-105 transition-all duration-300">
               <span className="text-white font-bold text-sm font-display">S</span>
             </div>
-            <span className="font-display font-semibold text-lg tracking-tight text-foreground">
+            <span className="font-display font-semibold text-lg tracking-tight" style={{ color: 'var(--text-primary)' }}>
               Skill<span className="gradient-text">Hub</span>
             </span>
           </Link>
@@ -74,9 +73,10 @@ export default function Navbar() {
                   href={link.href}
                   className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'text-white bg-white/10'
-                      : 'text-white/55 hover:text-white hover:bg-white/5'
+                      ? 'bg-[var(--surface-active)]'
+                      : 'hover:bg-[var(--surface-hover)]'
                   }`}
+                  style={{ color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)' }}
                 >
                   {link.label}
                   {isActive && (
@@ -85,47 +85,84 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {/* Tencent Cloud Tutorial link */}
+            <a
+              href="https://cloud.tencent.com/developer/article/2624973"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              <span className="flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5" />
+                教程
+              </span>
+            </a>
           </div>
 
           {/* Right side */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
             <Link
               href="/skills"
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel text-sm text-white/45 hover:text-white/75 transition-all duration-200 hover:border-white/15 hover:bg-white/[6%]"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel text-sm transition-all duration-200 hover:border-[var(--glass-border-strong)]"
+              style={{ color: 'var(--text-muted)' }}
             >
               <Search className="w-3.5 h-3.5" />
-              <span>Search skills...</span>
-              <kbd className="ml-4 px-1.5 py-0.5 rounded text-[10px] bg-white/5 text-white/25 border border-white/8 font-mono">
+              <span>搜索 skills...</span>
+              <kbd className="ml-4 px-1.5 py-0.5 rounded text-[10px] font-mono" style={{ background: 'var(--surface-subtle)', color: 'var(--text-faint)', border: '1px solid var(--divider)' }}>
                 /
               </kbd>
             </Link>
+
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg glass-panel transition-all duration-200 hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-tertiary)' }}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+
             <Button
               variant="outline"
               size="sm"
-              className="gap-2 bg-transparent border-white/10 text-white/75 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-200"
+              className="gap-2 bg-transparent transition-all duration-200"
+              style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
               onClick={() => {
-                import('sonner').then(({ toast }) => toast('GitHub sign-in coming soon'));
+                import('sonner').then(({ toast }) => toast('GitHub 登录即将上线'));
               }}
             >
               <Github className="w-4 h-4" />
-              Sign in
+              登录
             </Button>
           </div>
 
           {/* Mobile menu toggle */}
-          <button
-            className="md:hidden p-2 text-white/65 hover:text-white transition-colors"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg transition-colors"
+              style={{ color: 'var(--text-tertiary)' }}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button
+              className="p-2 transition-colors"
+              style={{ color: 'var(--text-secondary)' }}
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </nav>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden glass-panel-strong border-t border-white/5 animate-fade-in-up">
+        <div className="md:hidden glass-panel-strong animate-fade-in-up" style={{ borderTop: '1px solid var(--divider)' }}>
           <div className="container py-4 space-y-1">
             {navLinks.map(link => (
               <Link
@@ -133,23 +170,43 @@ export default function Navbar() {
                 href={link.href}
                 className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                   location === link.href
-                    ? 'text-white bg-white/10'
-                    : 'text-white/55 hover:text-white hover:bg-white/5'
+                    ? 'bg-[var(--surface-active)]'
+                    : 'hover:bg-[var(--surface-hover)]'
                 }`}
+                style={{ color: location === link.href ? 'var(--text-primary)' : 'var(--text-tertiary)' }}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-3 border-t border-white/5">
+            <a
+              href="https://cloud.tencent.com/developer/article/2624973"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              📚 教程合集
+            </a>
+            <a
+              href="https://s.ddnsip.cn/openclaw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--surface-hover)]"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              🤖 OpenClaw AI 助手
+            </a>
+            <div className="pt-3" style={{ borderTop: '1px solid var(--divider)' }}>
               <Button
                 variant="outline"
-                className="w-full gap-2 bg-transparent border-white/10 text-white/75"
+                className="w-full gap-2 bg-transparent"
+                style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
                 onClick={() => {
-                  import('sonner').then(({ toast }) => toast('GitHub sign-in coming soon'));
+                  import('sonner').then(({ toast }) => toast('GitHub 登录即将上线'));
                 }}
               >
                 <Github className="w-4 h-4" />
-                Sign in with GitHub
+                使用 GitHub 登录
               </Button>
             </div>
           </div>

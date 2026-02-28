@@ -1,7 +1,7 @@
 /*
- * Design: Apple Vision Pro Spatial Glass
- * Home page: Hero → Stats → Featured Skills → Popular Skills Grid → CTA → Footer
- * Enhanced: Better section rhythm, refined CTA, scroll-triggered animations
+ * Design: Apple-style dual theme
+ * Home page: Hero + Stats + Featured + Popular Grid + CTA + Footer
+ * Includes resource links in CTA section
  */
 
 import Navbar from '@/components/Navbar';
@@ -11,145 +11,166 @@ import FeaturedSkills from '@/components/FeaturedSkills';
 import Footer from '@/components/Footer';
 import SkillCard from '@/components/SkillCard';
 import { skills, sortSkills } from '@/lib/skillsData';
-import { ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'wouter';
-import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, BookOpen, MessageCircle, Gift, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const popularSkills = sortSkills(skills, 'downloads').slice(0, 6);
 
 export default function Home() {
-  const recentSkills = sortSkills(skills, 'downloads').slice(0, 6);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [ctaVisible, setCtaVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.05 }
-    );
-    const el = sectionRef.current;
-    if (el) observer.observe(el);
-    return () => { if (el) observer.unobserve(el); };
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setCtaVisible(true); },
-      { threshold: 0.2 }
-    );
-    const el = ctaRef.current;
-    if (el) observer.observe(el);
-    return () => { if (el) observer.unobserve(el); };
-  }, []);
-
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <HeroSection />
-      <StatsSection />
-      <FeaturedSkills />
 
-      {/* Popular Skills Grid */}
-      <section className="py-20" ref={sectionRef}>
-        <div className="container">
-          {/* Section divider */}
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/8 to-transparent mb-16" />
+      <main className="flex-1">
+        <HeroSection />
+        <StatsSection />
+        <FeaturedSkills />
 
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.02em]">
-                Popular Skills
-              </h2>
-              <p className="text-white/35 mt-2 text-base">
-                Most downloaded skills this month.
-              </p>
-            </div>
-            <Link
-              href="/skills"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-[#007AFF] hover:text-[#0071E3] transition-colors font-medium"
-            >
-              View all
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {recentSkills.map((skill, i) => (
-              <div
-                key={skill.id}
-                className={visible ? 'animate-fade-in-up' : 'opacity-0'}
-                style={{ animationDelay: `${i * 70}ms` }}
-              >
-                <SkillCard skill={skill} />
+        {/* Popular Skills Grid */}
+        <section className="py-20 relative">
+          <div className="container">
+            <div className="flex items-end justify-between mb-10 animate-fade-in-up">
+              <div>
+                <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-[-0.02em]" style={{ color: 'var(--text-primary)' }}>
+                  Popular Skills
+                </h2>
+                <p className="mt-2 text-base" style={{ color: 'var(--text-muted)' }}>
+                  Most downloaded skills this month.
+                </p>
               </div>
-            ))}
-          </div>
-
-          {/* Mobile view all */}
-          <div className="sm:hidden mt-6 text-center">
-            <Link
-              href="/skills"
-              className="inline-flex items-center gap-1.5 text-sm text-[#007AFF] font-medium"
-            >
-              View all skills
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden" ref={ctaRef}>
-        {/* Background effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#007AFF]/4 blur-[140px]" />
-          <div className="absolute top-1/3 right-1/4 w-[350px] h-[350px] rounded-full bg-[#AF52DE]/4 blur-[100px]" />
-          <div className="absolute bottom-1/4 left-1/3 w-[250px] h-[250px] rounded-full bg-[#5856D6]/3 blur-[80px]" />
-        </div>
-
-        <div className="container relative z-10">
-          <div
-            className={`glass-panel glass-highlight max-w-3xl mx-auto p-10 sm:p-16 text-center relative overflow-hidden transition-all duration-700 ${
-              ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            {/* Inner glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
-
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007AFF]/20 to-[#AF52DE]/20 flex items-center justify-center border border-white/10">
-                <Zap className="w-5 h-5 text-[#007AFF]" />
-              </div>
-            </div>
-
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.02em] mb-4">
-              Build the skill ecosystem
-            </h2>
-            <p className="text-white/35 text-base sm:text-lg max-w-lg mx-auto mb-10 leading-relaxed">
-              Share your skills with thousands of AI agents. Open source, versioned, and composable.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/skills"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#5856D6] text-white text-sm font-medium shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 hover:scale-[1.02] transition-all duration-300"
+                className="hidden sm:flex items-center gap-1.5 text-sm text-[#007AFF] hover:text-[#0071E3] transition-colors font-medium"
               >
-                Explore Skills
+                View all
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-white/10 text-white/55 text-sm font-medium hover:bg-white/5 hover:text-white/75 hover:border-white/15 transition-all duration-200"
-                onClick={(e) => {
-                  e.preventDefault();
-                  import('sonner').then(({ toast }) => toast('Documentation coming soon'));
-                }}
-              >
-                Read the Docs
-              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {popularSkills.map((skill, i) => (
+                <div key={skill.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 80}ms` }}>
+                  <SkillCard skill={skill} index={i} />
+                </div>
+              ))}
+            </div>
+
+            <div className="sm:hidden mt-6 text-center">
+              <Link href="/skills" className="text-sm text-[#007AFF] font-medium inline-flex items-center gap-1">
+                View all skills <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Tencent Cloud Resources Banner */}
+        <section className="py-12 relative">
+          <div className="container">
+            <div className="glass-panel glass-highlight p-8 sm:p-10 animate-fade-in-up">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#007AFF]/20 to-[#00C6FB]/20 flex items-center justify-center" style={{ border: '1px solid var(--divider)' }}>
+                  <BookOpen className="w-4 h-4 text-[#007AFF]" />
+                </div>
+                <h3 className="font-display font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>
+                  资源中心
+                </h3>
+              </div>
+              <p className="text-sm mb-6 max-w-2xl" style={{ color: 'var(--text-muted)' }}>
+                探索教程、参与活动、赢取大奖。
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <a
+                  href="https://cloud.tencent.com/developer/article/2624973"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  style={{ border: '1px solid var(--divider)' }}
+                >
+                  <BookOpen className="w-4 h-4 text-[#007AFF] shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium group-hover:text-[#007AFF] transition-colors" style={{ color: 'var(--text-primary)' }}>教程合集</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>完整开发指南</div>
+                  </div>
+                </a>
+                <a
+                  href="https://s.ddnsip.cn/openclaw"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  style={{ border: '1px solid var(--divider)' }}
+                >
+                  <MessageCircle className="w-4 h-4 text-[#30D158] shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium group-hover:text-[#30D158] transition-colors" style={{ color: 'var(--text-primary)' }}>OpenClaw AI 助手</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>遇到问题？问 AI</div>
+                  </div>
+                </a>
+                <a
+                  href="https://mc.tencent.com/HZjnvIK8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  style={{ border: '1px solid var(--divider)' }}
+                >
+                  <Gift className="w-4 h-4 text-[#FF9500] shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium group-hover:text-[#FF9500] transition-colors" style={{ color: 'var(--text-primary)' }}>最新活动速递</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>优惠与福利</div>
+                  </div>
+                </a>
+                <a
+                  href="https://mc.tencent.com/qxkewwOs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-[var(--surface-hover)] group"
+                  style={{ border: '1px solid var(--divider)' }}
+                >
+                  <Sparkles className="w-4 h-4 text-[#AF52DE] shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium group-hover:text-[#AF52DE] transition-colors" style={{ color: 'var(--text-primary)' }}>创意征文赛</div>
+                    <div className="text-xs" style={{ color: 'var(--text-faint)' }}>参赛赢大奖</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#007AFF]/[0.04] blur-[120px]" />
+            <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#AF52DE]/[0.03] blur-[80px]" />
+          </div>
+
+          <div className="container relative z-10 text-center">
+            <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-[-0.02em] mb-5 animate-fade-in-up" style={{ color: 'var(--text-primary)' }}>
+              Build the skill layer for AI
+            </h2>
+            <p className="text-lg max-w-xl mx-auto mb-10 animate-fade-in-up" style={{ color: 'var(--text-muted)', animationDelay: '100ms' }}>
+              Open source, composable, versioned. Ship your skill today and let agents do the rest.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              <Link href="/upload">
+                <Button className="bg-gradient-to-r from-[#007AFF] to-[#5856D6] hover:from-[#0071E3] hover:to-[#4F46E5] text-white border-0 rounded-xl px-8 py-5 text-sm font-medium shadow-lg shadow-[#007AFF]/20 hover:shadow-[#007AFF]/35 hover:scale-[1.02] transition-all duration-300">
+                  Publish a Skill
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/skills">
+                <Button
+                  variant="outline"
+                  className="bg-transparent rounded-xl px-8 py-5 text-sm transition-all duration-300"
+                  style={{ borderColor: 'var(--divider)', color: 'var(--text-secondary)' }}
+                >
+                  Browse Skills
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>
