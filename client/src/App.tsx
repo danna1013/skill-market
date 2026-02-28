@@ -5,33 +5,39 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-
+import Skills from "./pages/Skills";
+import SkillDetail from "./pages/SkillDetail";
+import Upload from "./pages/Upload";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      <Route path="/" component={Home} />
+      <Route path="/skills" component={Skills} />
+      <Route path="/skill/:slug" component={SkillDetail} />
+      <Route path="/upload" component={Upload} />
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
+          <Toaster
+            theme="dark"
+            toastOptions={{
+              style: {
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(40px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'rgba(255,255,255,0.8)',
+              },
+            }}
+          />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
