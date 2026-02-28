@@ -391,7 +391,8 @@ export function filterSkills(
       skill.name.toLowerCase().includes(query.toLowerCase()) ||
       skill.slug.toLowerCase().includes(query.toLowerCase()) ||
       skill.description.toLowerCase().includes(query.toLowerCase()) ||
-      skill.tags.some(t => t.toLowerCase().includes(query.toLowerCase()));
+      skill.tags.some(t => t.toLowerCase().includes(query.toLowerCase())) ||
+      skill.author.toLowerCase().includes(query.toLowerCase());
     
     const matchesCategory = category === 'all' || skill.category === category;
     const matchesHighlighted = !showHighlighted || skill.highlighted;

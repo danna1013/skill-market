@@ -1,23 +1,101 @@
 /*
  * Design: Apple Vision Pro Spatial Glass
  * Skills page: Full browsing experience with search, filters, sort, view toggle
- * Left sidebar filters (desktop) + top bar (mobile)
+ * Enhanced: Better list view, result count animation, refined empty state
  */
 
-import { useState, useMemo, useEffect } from 'react';
-import { useLocation, useSearch } from 'wouter';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { useSearch } from 'wouter';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SkillCard from '@/components/SkillCard';
 import CategoryBar from '@/components/CategoryBar';
 import {
-  skills, sortSkills, filterSkills, sortOptions,
-  type SortOption,
+  skills, sortSkills, filterSkills, sortOptions, formatNumber,
+  type SortOption, type Skill,
 } from '@/lib/skillsData';
 import {
   Search, Grid3X3, List, SlidersHorizontal, X, ChevronDown,
+  Star, Download, ShieldCheck, ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
+
+const categoryColors: Record<string, string> = {
+  'dev-tools': '#007AFF',
+  'ai-ml': '#AF52DE',
+  'productivity': '#FF9500',
+  'search': '#30D158',
+  'communication': '#FF2D55',
+  'security': '#FF3B30',
+  'automation': '#5856D6',
+  'media': '#FF9500',
+};
+
+function SkillListItem({ skill }: { skill: Skill }) {
+  const color = categoryColors[skill.category] || '#007AFF';
+  return (
+    <Link href={`/skill/${skill.slug}`} className="block group">
+      <div className="skill-card glass-panel glass-highlight p-4 sm:p-5 flex items-center gap-4 relative overflow-hidden">
+        {/* Hover glow */}
+        <div
+          className="absolute -top-12 -left-12 w-24 h-24 rounded-full blur-[40px] opacity-0 group-hover:opacity-15 transition-opacity duration-500"
+          style={{ background: color }}
+        />
+
+        {/* Icon */}
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold font-display shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300"
+          style={{
+            background: `linear-gradient(135deg, ${color}, ${color}80)`,
+            boxShadow: `0 4px 12px ${color}20`,
+          }}
+        >
+          {skill.name[0]}
+        </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <h3 className="font-display font-semibold text-sm text-white truncate">
+              {skill.name}
+            </h3>
+            <span className="font-mono text-[10px] text-white/20">
+              {skill.currentVersion}
+            </span>
+            {skill.highlighted && (
+              <span className="px-1.5 py-0.5 rounded text-[9px] bg-[#FFD60A]/10 text-[#FFD60A] font-medium">
+                highlighted
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-white/35 truncate">
+            {skill.description}
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="hidden sm:flex items-center gap-4 shrink-0">
+          <span className="text-xs text-white/30 flex items-center gap-1">
+            @{skill.author}
+          </span>
+          {skill.securityStatus === 'benign' && (
+            <ShieldCheck className="w-3.5 h-3.5 text-[#30D158]/45" />
+          )}
+          <span className="flex items-center gap-1 text-xs text-white/25">
+            <Star className="w-3 h-3 fill-current text-[#FFD60A]/45" />
+            {formatNumber(skill.stars)}
+          </span>
+          <span className="flex items-center gap-1 text-xs text-white/25">
+            <Download className="w-3 h-3" />
+            {formatNumber(skill.downloads)}
+          </span>
+          <ArrowRight className="w-3.5 h-3.5 text-white/15 group-hover:text-white/40 transition-colors" />
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 export default function Skills() {
   const searchString = useSearch();
@@ -29,10 +107,13 @@ export default function Skills() {
   const [sort, setSort] = useState<SortOption>('downloads');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [showHighlighted, setShowHighlighted] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setQuery(initialQuery);
+    if (initialQuery && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, [initialQuery]);
 
   const filtered = useMemo(() => {
@@ -50,31 +131,35 @@ export default function Skills() {
         <div className="container">
           {/* Page header */}
           <div className="mb-8">
-            <h1 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">
+            <h1 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.02em]">
               Browse Skills
             </h1>
-            <p className="text-white/40 mt-2">
-              {filtered.length} skill{filtered.length !== 1 ? 's' : ''} found
+            <p className="text-white/35 mt-2">
+              <span className="text-white/55 font-medium">{filtered.length}</span> skill{filtered.length !== 1 ? 's' : ''} found
+              {query && (
+                <span className="text-white/25"> for &ldquo;<span className="text-white/45">{query}</span>&rdquo;</span>
+              )}
             </p>
           </div>
 
           {/* Search + Controls bar */}
-          <div className="flex flex-col gap-4 mb-6">
+          <div className="flex flex-col gap-4 mb-8">
             {/* Search */}
             <div className="relative search-glow rounded-xl transition-all duration-300">
-              <div className="glass-panel flex items-center px-4 py-3 rounded-xl">
-                <Search className="w-4.5 h-4.5 text-white/30 shrink-0" />
+              <div className="glass-panel glass-highlight flex items-center px-4 py-3.5 rounded-xl">
+                <Search className="w-4.5 h-4.5 text-white/25 shrink-0" />
                 <input
+                  ref={inputRef}
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Search by name, description, tag, or author..."
-                  className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/25 ml-3 text-sm"
+                  className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/20 ml-3 text-sm"
                 />
                 {query && (
                   <button
                     onClick={() => setQuery('')}
-                    className="p-1 text-white/30 hover:text-white/60 transition-colors"
+                    className="p-1.5 rounded-md hover:bg-white/5 text-white/25 hover:text-white/55 transition-all duration-200"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -93,7 +178,7 @@ export default function Skills() {
               <div className="shrink-0 flex items-center gap-2">
                 {/* Sort dropdown */}
                 <div className="relative group">
-                  <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg glass-panel text-sm text-white/50 hover:text-white/70 transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg glass-panel text-sm text-white/45 hover:text-white/65 transition-colors">
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">{sortLabel}</span>
                     <ChevronDown className="w-3 h-3" />
@@ -106,7 +191,7 @@ export default function Skills() {
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           sort === opt.value
                             ? 'text-white bg-white/10'
-                            : 'text-white/50 hover:text-white/70 hover:bg-white/5'
+                            : 'text-white/45 hover:text-white/65 hover:bg-white/5'
                         }`}
                       >
                         {opt.label}
@@ -121,7 +206,7 @@ export default function Skills() {
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border ${
                     showHighlighted
                       ? 'bg-[#007AFF]/15 border-[#007AFF]/30 text-[#007AFF]'
-                      : 'glass-panel text-white/50 hover:text-white/70'
+                      : 'glass-panel text-white/45 hover:text-white/65'
                   }`}
                 >
                   <span className="hidden sm:inline">Highlighted</span>
@@ -133,7 +218,7 @@ export default function Skills() {
                   <button
                     onClick={() => setView('grid')}
                     className={`p-2 transition-colors ${
-                      view === 'grid' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'
+                      view === 'grid' ? 'bg-white/10 text-white' : 'text-white/25 hover:text-white/45'
                     }`}
                     aria-label="Grid view"
                   >
@@ -142,7 +227,7 @@ export default function Skills() {
                   <button
                     onClick={() => setView('list')}
                     className={`p-2 transition-colors ${
-                      view === 'list' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'
+                      view === 'list' ? 'bg-white/10 text-white' : 'text-white/25 hover:text-white/45'
                     }`}
                     aria-label="List view"
                   >
@@ -166,26 +251,28 @@ export default function Skills() {
                 <div
                   key={skill.id}
                   className="animate-fade-in-up"
-                  style={{ animationDelay: `${i * 40}ms` }}
+                  style={{ animationDelay: `${Math.min(i * 40, 400)}ms` }}
                 >
-                  <SkillCard skill={skill} />
+                  {view === 'grid' ? (
+                    <SkillCard skill={skill} />
+                  ) : (
+                    <SkillListItem skill={skill} />
+                  )}
                 </div>
               ))}
             </div>
           ) : (
-            <div className="glass-panel p-16 text-center">
-              <div className="text-4xl mb-4 opacity-30">
-                <Search className="w-12 h-12 mx-auto text-white/20" />
-              </div>
-              <h3 className="font-display font-semibold text-lg text-white/60 mb-2">
+            <div className="glass-panel glass-highlight p-16 text-center animate-fade-in-up">
+              <Search className="w-12 h-12 mx-auto text-white/15 mb-5" />
+              <h3 className="font-display font-semibold text-lg text-white/55 mb-2">
                 No skills found
               </h3>
-              <p className="text-sm text-white/30 max-w-md mx-auto">
+              <p className="text-sm text-white/25 max-w-md mx-auto mb-6">
                 Try adjusting your search query or filters. You can also browse all categories.
               </p>
               <Button
                 onClick={() => { setQuery(''); setCategory('all'); setShowHighlighted(false); }}
-                className="mt-6 bg-white/5 hover:bg-white/10 text-white/60 border border-white/10"
+                className="bg-white/5 hover:bg-white/10 text-white/55 border border-white/10 rounded-xl"
               >
                 Clear all filters
               </Button>
